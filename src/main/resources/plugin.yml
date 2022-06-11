@@ -1,0 +1,12 @@
+name: DeathSwap
+version: '${project.version}'
+main: tk.yjservers.deathswap.DeathSwap
+api-version: 1.19
+description: only 2 years late
+commands:
+  team:
+    description: Set your team!
+    usage: /team red/blue
+  start:
+    description: Start the game!
+    usage: /start
