@@ -94,6 +94,8 @@ public final class DeathSwap extends JavaPlugin {
         gw.deleteWorld("deathswap-2");
         getLogger().info("Deleting lobby world...");
         gw.deleteWorld(levelname);
+        gw.deleteWorld(levelname + "_nether");
+        gw.deleteWorld(levelname + "_the_end");
         getLogger().warning("You may see errors coming from minecraft after this message! This is fine and can be ignored.");
         getLogger().info("Finished disabling. Zzz...");
     }
