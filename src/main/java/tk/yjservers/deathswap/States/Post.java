@@ -8,16 +8,11 @@ import org.bukkit.boss.BarStyle;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import tk.yjservers.deathswap.Commands.team;
-import tk.yjservers.gamemaster.GameMaster;
 import tk.yjservers.gamemaster.GamePlayer;
 
+import static tk.yjservers.deathswap.DeathSwap.gm;
+
 public class Post {
-
-    private final GameMaster gm;
-
-    public Post() {
-        gm = new GameMaster();
-    }
     public void start(team.Teams winner) {
         if (winner.equals(team.Teams.team1)) {
             for (Player p : Bukkit.getOnlinePlayers()) {

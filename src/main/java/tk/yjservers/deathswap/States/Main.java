@@ -6,7 +6,6 @@ import org.bukkit.boss.BarStyle;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import tk.yjservers.deathswap.Commands.team;
-import tk.yjservers.gamemaster.GameMaster;
 import tk.yjservers.gamemaster.GamePlayer;
 
 import java.util.Objects;
@@ -18,12 +17,8 @@ import static tk.yjservers.deathswap.DeathSwap.*;
 
 public class Main {
 
-    private final GameMaster gm;
     private BukkitRunnable swapTask;
 
-    public Main() {
-        gm = new GameMaster();
-    }
     public void start() {
         for (String s : team1.getEntries()) {
             Objects.requireNonNull(Bukkit.getPlayer(s)).teleport(ds1.getSpawnLocation());
