@@ -10,6 +10,8 @@ import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.Team;
 import tk.yjservers.deathswap.DeathSwap;
 
+import java.util.Objects;
+
 import static tk.yjservers.deathswap.DeathSwap.state;
 
 public class team implements CommandExecutor {
@@ -17,8 +19,13 @@ public class team implements CommandExecutor {
     public static Team team1;
     public static Team team2;
 
+    public enum Teams {
+        team1,
+        team2
+    }
+
     public team() {
-        Scoreboard scoreboard = Bukkit.getScoreboardManager().getNewScoreboard();
+        Scoreboard scoreboard = Objects.requireNonNull(Bukkit.getScoreboardManager()).getNewScoreboard();
         team1 = scoreboard.registerNewTeam("Red");
         team2 = scoreboard.registerNewTeam("Blue");
 

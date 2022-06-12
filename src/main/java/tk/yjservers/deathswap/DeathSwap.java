@@ -4,9 +4,14 @@ import org.bukkit.World;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
+import tk.yjservers.deathswap.Commands.start;
+import tk.yjservers.deathswap.Commands.team;
+import tk.yjservers.deathswap.Listener.onPlayerDeath;
 import tk.yjservers.gamemaster.GameMaster;
+import tk.yjservers.gamemaster.GameServer;
 
 import java.io.IOException;
+import java.util.Objects;
 import java.util.Random;
 
 public final class DeathSwap extends JavaPlugin {
@@ -20,11 +25,29 @@ public final class DeathSwap extends JavaPlugin {
     public enum States {
         PREGAME,
         MAIN,
-        POSTGAME;
+        POSTGAME
     }
     @Override
     public void onEnable() {
         GameMaster gm = new GameMaster();
+
+        GameServer.OSTypes os = gm.GameServer.getOS();
+        if (os != GameServer.OSTypes.Unknown) {
+            try {
+                gm.GameServer.setupRestart(os);
+                if (gm.GameServer.checkForServerProperties()) {
+                    gm.GameServer.restart();
+                }
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+
+        Objects.requireNonNull(getCommand("team")).setExecutor(new team());
+        Objects.requireNonNull(getCommand("start")).setExecutor(new start());
+        getServer().getPluginManager().registerEvents(new onPlayerDeath(), this);
+
         Long seed = new Random().nextLong();
         ds1 = gm.GameWorld.createWorld("deathswap-1", seed);
         ds2 = gm.GameWorld.createWorld("deathswap-2", seed);

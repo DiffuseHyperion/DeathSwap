@@ -5,6 +5,7 @@ import org.bukkit.boss.BarColor;
 import org.bukkit.boss.BarStyle;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
+import tk.yjservers.deathswap.Commands.team;
 import tk.yjservers.gamemaster.GameMaster;
 import tk.yjservers.gamemaster.GamePlayer;
 
@@ -17,7 +18,8 @@ import static tk.yjservers.deathswap.DeathSwap.*;
 
 public class Main {
 
-    private GameMaster gm;
+    private final GameMaster gm;
+    private BukkitRunnable swapTask;
 
     public Main() {
         gm = new GameMaster();
@@ -37,7 +39,7 @@ public class Main {
                     BarColor.YELLOW, BarStyle.SOLID);
         }
 
-        BukkitRunnable swapTask = new BukkitRunnable() {
+        swapTask = new BukkitRunnable() {
             @Override
             public void run() {
                 new BukkitRunnable() {
@@ -68,6 +70,12 @@ public class Main {
                         }
                     });
         }
+    }
+
+    public void endGame(team.Teams winner) {
+        swapTask.cancel();
+        state = States.POSTGAME;
+        new Post().start(winner);
     }
 
 }

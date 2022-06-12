@@ -3,6 +3,8 @@ version: '${project.version}'
 main: tk.yjservers.deathswap.DeathSwap
 api-version: 1.19
 description: only 2 years late
+depend:
+  - GameMaster
 commands:
   team:
     description: Set your team!
