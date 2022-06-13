@@ -1,3 +1,35 @@
+# How long between each swap.
 swaptimer:
+  # Minimum amount of time per swap. Unit is seconds.
   min: 120
+  # Maximum amount of time per swap. Unit is seconds.
   max: 240
+
+# Config for certain actions the plugin will do on your server.
+# This is spooky by nature, you can choose to disable it.
+server:
+  # Attempts to set up restarting automatically if it wasn't.
+  setuprestart:
+    # Enable this section?
+    enable: true
+    # The name of your server jar. Leave blank to let the plugin get it, but this might cause errors!
+    jarname: spigot-1.19.jar
+    # The operating system of your server. Leave blank to let the plugin get it.
+    # Accepted values: Windows, Mac, Unix, Solaris
+    os: Unix
+  # Changes some properties in your server for optimization/balancing.
+  changeproperties:
+    # Whether to disable the nether.
+    # Set this to true to prevent players from going to the nether, and save some server resources.
+    nether: false
+    # Whether to disable the end.
+    # Set this to true to prevent players from going to the end, and save some server resources.
+    # Consider that most games will never reach this point.
+    end: false
+    # Whether to disable spawn protection.
+    # Set this to true to stop minecraft from blocking placement and destruction of blocks at 0, 0.
+    protection: true
+    # Whether to disable minecraft's anti cheat.
+    # Set this to true to prevent players from being kicked randomly for flying.
+    # Consider getting an anticheat plugin.
+    anticheat: true
