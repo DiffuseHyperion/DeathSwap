@@ -42,6 +42,14 @@ public final class DeathSwap extends JavaPlugin {
         config = getConfig();
         state = States.PREGAME;
         plugin = this;
+        try {
+            levelname = new GameServer().readServerProperties("level-name");
+            getLogger().info("Found lobby name (level-name in server.properties): " + levelname);
+        } catch (IOException e) {
+            getLogger().severe("Something happened while reading level-name in server.property! Error logs are below, defaulting to 'world'");
+            e.printStackTrace();
+            levelname = "world";
+        }
 
         if (config.getBoolean("server.setuprestart.enable")) {
             getLogger().info("Detected that auto setup restart was enabled! Getting operating system.");
@@ -119,14 +127,6 @@ public final class DeathSwap extends JavaPlugin {
             getLogger().info("Creating end worlds...");
             ds1 = gm.GameWorld.createWorld("deathswap-1-end", seed, World.Environment.THE_END, WorldType.NORMAL);
             ds2 = gm.GameWorld.createWorld("deathswap-2-end", seed, World.Environment.THE_END, WorldType.NORMAL);
-        }
-        try {
-            levelname = new GameServer().readServerProperties("level-name");
-            getLogger().info("Found lobby name (level-name in server.properties): " + levelname);
-        } catch (IOException e) {
-            getLogger().severe("Something happened while reading level-name in server.property! Error logs are below, defaulting to 'world'");
-            e.printStackTrace();
-            levelname = "world";
         }
         World lobby = gm.GameWorld.createWorld(levelname);
         gm.GameWorld.setupWorld(lobby, true, 10.0, 0, 0, 0);
