@@ -1,5 +1,6 @@
 package tk.yjservers.deathswap;
 
+import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.WorldType;
 import org.bukkit.configuration.InvalidConfigurationException;
@@ -84,6 +85,8 @@ public final class DeathSwap extends JavaPlugin {
                     if (gm.GameServer.setupRestart(os, serverJar)) {
                         getLogger().info("Detected that it wasn't! It has been rectified.");
                         getLogger().info("This plugin has created a file called restart.bat/restart.sh, please do not delete it!");
+                        getLogger().info("The server will now shutdown for changes to take effect.");
+                        Bukkit.shutdown();
                     }
                 } catch (IOException | InvalidConfigurationException e) {
                     throw new RuntimeException(e);
