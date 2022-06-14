@@ -10,6 +10,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import tk.yjservers.deathswap.Commands.start;
 import tk.yjservers.deathswap.Commands.team;
 import tk.yjservers.deathswap.Listener.onPlayerDeath;
+import tk.yjservers.deathswap.Listener.onPlayerJoin;
 import tk.yjservers.gamemaster.GameMaster;
 import tk.yjservers.gamemaster.GameServer;
 import tk.yjservers.gamemaster.GameWorld;
@@ -113,6 +114,7 @@ public final class DeathSwap extends JavaPlugin {
         Objects.requireNonNull(getCommand("team")).setExecutor(new team());
         Objects.requireNonNull(getCommand("start")).setExecutor(new start());
         getServer().getPluginManager().registerEvents(new onPlayerDeath(), this);
+        getServer().getPluginManager().registerEvents(new onPlayerJoin(), this);
 
         getLogger().info("Creating deathswap and lobby worlds...");
         Long seed = new Random().nextLong();
@@ -123,13 +125,13 @@ public final class DeathSwap extends JavaPlugin {
         ds2 = gm.GameWorld.createWorld("deathswap-2", seed);
         if (!config.getBoolean("server.changeproperties.nether")) {
             getLogger().info("Creating nether worlds...");
-            ds1 = gm.GameWorld.createWorld("deathswap-1-nether", seed, World.Environment.NETHER, WorldType.NORMAL);
-            ds2 = gm.GameWorld.createWorld("deathswap-2-nether", seed, World.Environment.NETHER, WorldType.NORMAL);
+            gm.GameWorld.createWorld("deathswap-1-nether", seed, World.Environment.NETHER, WorldType.NORMAL);
+            gm.GameWorld.createWorld("deathswap-2-nether", seed, World.Environment.NETHER, WorldType.NORMAL);
         }
         if (!config.getBoolean("server.changeproperties.end")) {
             getLogger().info("Creating end worlds...");
-            ds1 = gm.GameWorld.createWorld("deathswap-1-end", seed, World.Environment.THE_END, WorldType.NORMAL);
-            ds2 = gm.GameWorld.createWorld("deathswap-2-end", seed, World.Environment.THE_END, WorldType.NORMAL);
+            gm.GameWorld.createWorld("deathswap-1-end", seed, World.Environment.THE_END, WorldType.NORMAL);
+            gm.GameWorld.createWorld("deathswap-2-end", seed, World.Environment.THE_END, WorldType.NORMAL);
         }
         World lobby = gm.GameWorld.createWorld(levelname);
         gm.GameWorld.setupWorld(lobby, true, 10.0, 0, 0, 0);

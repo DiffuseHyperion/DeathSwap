@@ -17,7 +17,7 @@ import static tk.yjservers.deathswap.DeathSwap.*;
 
 public class Main {
 
-    private BukkitRunnable swapTask;
+    private static BukkitRunnable swapTask;
 
     public void start() {
         for (String s : team1.getEntries()) {
@@ -26,8 +26,8 @@ public class Main {
         for (String s : team2.getEntries()) {
             Objects.requireNonNull(Bukkit.getPlayer(s)).teleport(ds2.getSpawnLocation());
         }
-        int swapMin = config.getInt("swaptimer.min");
-        int swapMax = config.getInt("swaptimer.max");
+        int swapMin = config.getInt("game.swap.swaptimer.min");
+        int swapMax = config.getInt("game.swap.swaptimer.max");
         for (Player p : Bukkit.getOnlinePlayers()) {
             gm.GamePlayer.timer(p, 15,
                     "Game has started! Swaps happen every " + swapMin + " - " + swapMax + " seconds.",

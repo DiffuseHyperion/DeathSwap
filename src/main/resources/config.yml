@@ -1,9 +1,16 @@
-# How long between each swap.
-swaptimer:
-  # Minimum amount of time per swap. Unit is seconds.
-  min: 120
-  # Maximum amount of time per swap. Unit is seconds.
-  max: 240
+# Config related to gameplay.
+game:
+  # Config related to swapping.
+  swap:
+    # How long between each swap.
+    swaptimer:
+      # Minimum amount of time per swap. Unit is seconds.
+      min: 120
+      # Maximum amount of time per swap. Unit is seconds.
+      max: 240
+    # Inform players about a forced swap (done with /swap during an active game)
+    informforceswap: true
+
 
 # Config for certain actions the plugin will do on your server.
 # This is spooky by nature, you can choose to disable it.
