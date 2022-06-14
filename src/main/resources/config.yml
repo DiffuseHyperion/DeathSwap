@@ -11,7 +11,7 @@ server:
   # Attempts to set up restarting automatically if it wasn't.
   setuprestart:
     # Enable this section?
-    enable: true
+    enable: false
     # The name of your server jar. Leave blank to let the plugin get it, but this might cause errors!
     jarname: spigot-1.19.jar
     # The operating system of your server. Leave blank to let the plugin get it.

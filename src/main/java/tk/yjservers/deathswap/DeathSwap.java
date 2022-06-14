@@ -36,22 +36,40 @@ public final class DeathSwap extends JavaPlugin {
     public void onEnable() {
         gm = (GameMaster) getServer().getPluginManager().getPlugin("GameMaster");
         assert gm != null;
+
+        getLogger().info("Getting configuration...");
+        saveDefaultConfig();
+        config = getConfig();
+        state = States.PREGAME;
+        plugin = this;
+
         if (config.getBoolean("server.setuprestart.enable")) {
-            GameServer.OSTypes os = gm.GameServer.getOS();
+            getLogger().info("Detected that auto setup restart was enabled! Getting operating system.");
+
+            GameServer.OSTypes os;
             if (config.contains("server.setuprestart.os")) {
                 String configOS = config.getString("server.setuprestart.os");
                 if (containsOS(configOS)) {
                     os = GameServer.OSTypes.valueOf(configOS);
                 } else {
-                    os = GameServer.OSTypes.Unknown;
+                    getLogger().info("Unknown OS specified in config.yml! Resorting to automatic detection.");
+                    os = gm.GameServer.getOS();
                 }
+            } else {
+                os = gm.GameServer.getOS();
             }
+            getLogger().info("Detected operating system: " + os.toString());
 
             if (os != GameServer.OSTypes.Unknown) {
-                String serverJar = gm.GameServer.getServerJar().getName();
+                getLogger().info("Getting server jar's name...");
+                String serverJar;
                 if (config.contains("server.setuprestart.jarname")){
                     serverJar = config.getString("server.setuprestart.jarname");
+                } else {
+                    serverJar = gm.GameServer.getServerJar().getName();
                 }
+
+                getLogger().info("Server jar name: " + serverJar);
 
                 getLogger().info("Checking if restarting is configured in your server...");
                 try {
@@ -62,6 +80,8 @@ public final class DeathSwap extends JavaPlugin {
                 } catch (IOException | InvalidConfigurationException e) {
                     throw new RuntimeException(e);
                 }
+            } else {
+                getLogger().info("The plugin was unable to find your operating system. Aborting restart setup.");
             }
         }
 
@@ -86,14 +106,17 @@ public final class DeathSwap extends JavaPlugin {
         getLogger().info("Creating deathswap and lobby worlds...");
         Long seed = new Random().nextLong();
         getLogger().info("Using seed " + seed + " for deathswap worlds!");
-        getLogger().info("Creating deathswap-1, this may take a while...");
+        getLogger().info("Creating deathswap worlds, this may take a while...");
+        getLogger().info("Creating overworld worlds...");
         ds1 = gm.GameWorld.createWorld("deathswap-1", seed);
         ds2 = gm.GameWorld.createWorld("deathswap-2", seed);
         if (!config.getBoolean("server.changeproperties.nether")) {
+            getLogger().info("Creating nether worlds...");
             ds1 = gm.GameWorld.createWorld("deathswap-1-nether", seed, World.Environment.NETHER, WorldType.NORMAL);
             ds2 = gm.GameWorld.createWorld("deathswap-2-nether", seed, World.Environment.NETHER, WorldType.NORMAL);
         }
         if (!config.getBoolean("server.changeproperties.end")) {
+            getLogger().info("Creating end worlds...");
             ds1 = gm.GameWorld.createWorld("deathswap-1-end", seed, World.Environment.THE_END, WorldType.NORMAL);
             ds2 = gm.GameWorld.createWorld("deathswap-2-end", seed, World.Environment.THE_END, WorldType.NORMAL);
         }
@@ -107,12 +130,6 @@ public final class DeathSwap extends JavaPlugin {
         }
         World lobby = gm.GameWorld.createWorld(levelname);
         gm.GameWorld.setupWorld(lobby, true, 10.0, 0, 0, 0);
-
-        getLogger().info("Getting configuration...");
-        saveDefaultConfig();
-        config = getConfig();
-        state = States.PREGAME;
-        plugin = this;
 
         getLogger().info("Finished setup! Have fun!");
     }
