@@ -12,3 +12,13 @@ commands:
   start:
     description: Start the game!
     usage: /start
+    permission: deathswap.start
+  swap:
+    description: Force a swap during a game!
+    usage: /swap
+    permission: deathswap.swap
+permissions:
+  deathswap.start:
+    description: Permissions to start the game.
+  deathswap.swap:
+    description: Permissions to force a swap during a game.

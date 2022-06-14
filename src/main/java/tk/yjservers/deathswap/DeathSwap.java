@@ -8,6 +8,7 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 import tk.yjservers.deathswap.Commands.start;
+import tk.yjservers.deathswap.Commands.swap;
 import tk.yjservers.deathswap.Commands.team;
 import tk.yjservers.deathswap.Listener.onPlayerDeath;
 import tk.yjservers.deathswap.Listener.onPlayerJoin;
@@ -113,6 +114,7 @@ public final class DeathSwap extends JavaPlugin {
         getLogger().info("Registering commands and events...");
         Objects.requireNonNull(getCommand("team")).setExecutor(new team());
         Objects.requireNonNull(getCommand("start")).setExecutor(new start());
+        Objects.requireNonNull(getCommand("swap")).setExecutor(new swap());
         getServer().getPluginManager().registerEvents(new onPlayerDeath(), this);
         getServer().getPluginManager().registerEvents(new onPlayerJoin(), this);
 

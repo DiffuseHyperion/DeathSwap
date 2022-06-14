@@ -1,6 +1,8 @@
 package tk.yjservers.deathswap.States;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.boss.BarColor;
 import org.bukkit.boss.BarStyle;
 import org.bukkit.entity.Player;
@@ -8,8 +10,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import tk.yjservers.deathswap.Commands.team;
 import tk.yjservers.gamemaster.GamePlayer;
 
-import java.util.Objects;
-import java.util.Random;
+import java.util.*;
 
 import static tk.yjservers.deathswap.Commands.team.team1;
 import static tk.yjservers.deathswap.Commands.team.team2;
@@ -56,11 +57,28 @@ public class Main {
                     BarColor.RED, BarStyle.SOLID, new BukkitRunnable() {
                         @Override
                         public void run() {
+                            HashMap<Location, String> team1Locs = new HashMap<>();
+                            HashMap<Location, String> team2Locs = new HashMap<>();
                             for (String s : team1.getEntries()) {
-                                Objects.requireNonNull(Bukkit.getPlayer(s)).teleport(Objects.requireNonNull(Bukkit.getPlayer((String) team2.getEntries().toArray()[new Random().nextInt(team2.getEntries().size())])).getLocation());
+                                team1Locs.put(Objects.requireNonNull(Bukkit.getPlayer(s)).getLocation(), s);
                             }
                             for (String s : team2.getEntries()) {
-                                Objects.requireNonNull(Bukkit.getPlayer(s)).teleport(Objects.requireNonNull(Bukkit.getPlayer((String) team1.getEntries().toArray()[new Random().nextInt(team1.getEntries().size())])).getLocation());
+                                team2Locs.put(Objects.requireNonNull(Bukkit.getPlayer(s)).getLocation(), s);
+                            }
+
+                            for (String s : team1.getEntries()) {
+                                Player p = Objects.requireNonNull(Bukkit.getPlayer(s));
+                                Set<Location> arraySet = team2Locs.keySet();
+                                Location loc = (Location) arraySet.toArray()[new Random().nextInt(arraySet.size())];
+                                p.teleport(loc);
+                                p.sendMessage(ChatColor.RED + "Teleporting to " + ChatColor.BOLD + team2Locs.get(loc) + "!");
+                            }
+                            for (String s : team2.getEntries()) {
+                                Player p = Objects.requireNonNull(Bukkit.getPlayer(s));
+                                Set<Location> arraySet = team1Locs.keySet();
+                                Location loc = (Location) arraySet.toArray()[new Random().nextInt(arraySet.size())];
+                                p.teleport(loc);
+                                p.sendMessage(ChatColor.RED + "Teleporting to " + ChatColor.BOLD + team1Locs.get(loc) + "!");
                             }
                         }
                     });
