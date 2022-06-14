@@ -85,8 +85,7 @@ public final class DeathSwap extends JavaPlugin {
                     if (gm.GameServer.setupRestart(os, serverJar)) {
                         getLogger().info("Detected that it wasn't! It has been rectified.");
                         getLogger().info("This plugin has created a file called restart.bat/restart.sh, please do not delete it!");
-                        getLogger().info("The server will now shutdown for changes to take effect.");
-                        Bukkit.shutdown();
+                        getLogger().info("The restart will take effect on next server boot.");
                     }
                 } catch (IOException | InvalidConfigurationException e) {
                     throw new RuntimeException(e);
