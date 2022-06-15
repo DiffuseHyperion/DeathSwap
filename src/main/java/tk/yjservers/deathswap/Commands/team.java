@@ -16,26 +16,26 @@ import static tk.yjservers.deathswap.DeathSwap.state;
 
 public class team implements CommandExecutor {
 
-    public static Team team1;
-    public static Team team2;
+    public static Team redTeam;
+    public static Team blueTeam;
 
     public enum Teams {
-        team1,
-        team2
+        redTeam,
+        blueTeam
     }
 
     public team() {
         Scoreboard scoreboard = Objects.requireNonNull(Bukkit.getScoreboardManager()).getNewScoreboard();
-        team1 = scoreboard.registerNewTeam("Red");
-        team2 = scoreboard.registerNewTeam("Blue");
+        redTeam = scoreboard.registerNewTeam("Red");
+        blueTeam = scoreboard.registerNewTeam("Blue");
 
-        team1.setAllowFriendlyFire(false);
-        team1.setColor(ChatColor.RED);
-        team1.setOption(Team.Option.COLLISION_RULE, Team.OptionStatus.FOR_OTHER_TEAMS);
+        redTeam.setAllowFriendlyFire(false);
+        redTeam.setColor(ChatColor.RED);
+        redTeam.setOption(Team.Option.COLLISION_RULE, Team.OptionStatus.FOR_OTHER_TEAMS);
 
-        team2.setAllowFriendlyFire(false);
-        team2.setColor(ChatColor.BLUE);
-        team2.setOption(Team.Option.COLLISION_RULE, Team.OptionStatus.FOR_OTHER_TEAMS);
+        blueTeam.setAllowFriendlyFire(false);
+        blueTeam.setColor(ChatColor.BLUE);
+        blueTeam.setOption(Team.Option.COLLISION_RULE, Team.OptionStatus.FOR_OTHER_TEAMS);
     }
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
@@ -55,11 +55,11 @@ public class team implements CommandExecutor {
         String pname = p.getDisplayName();
         switch (args[0]) {
             case "red":
-                team1.addEntry(pname);
+                redTeam.addEntry(pname);
                 Bukkit.broadcastMessage(ChatColor.YELLOW + pname + " has joined the " + ChatColor.RED + ChatColor.BOLD + "red" + ChatColor.RESET + ChatColor.YELLOW + " team!");
                 return true;
             case "blue":
-                team2.addEntry(pname);
+                blueTeam.addEntry(pname);
                 Bukkit.broadcastMessage(ChatColor.YELLOW + pname + " has joined the " + ChatColor.BLUE + ChatColor.BOLD + "blue" + ChatColor.RESET + ChatColor.YELLOW + " team!");
                 return true;
             default:

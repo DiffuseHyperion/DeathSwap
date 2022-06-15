@@ -3,6 +3,7 @@ package tk.yjservers.deathswap.States;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
+import org.bukkit.Sound;
 import org.bukkit.boss.BarColor;
 import org.bukkit.boss.BarStyle;
 import org.bukkit.boss.BossBar;
@@ -16,7 +17,8 @@ import static tk.yjservers.deathswap.DeathSwap.gm;
 
 public class Post {
     public void start(team.Teams winner) {
-        if (winner.equals(team.Teams.team1)) {
+        gm.GamePlayer.playSoundToAll(Sound.UI_TOAST_CHALLENGE_COMPLETE);
+        if (winner.equals(team.Teams.redTeam)) {
             for (Player p : Bukkit.getOnlinePlayers()) {
                 p.sendTitle(ChatColor.RED + "Red has won the game!", "Congratulations!", 10, 70, 20);
             }

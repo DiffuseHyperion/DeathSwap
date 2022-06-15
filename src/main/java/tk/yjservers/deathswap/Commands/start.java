@@ -13,8 +13,8 @@ import tk.yjservers.deathswap.States.Main;
 import java.util.ArrayList;
 import java.util.List;
 
-import static tk.yjservers.deathswap.Commands.team.team1;
-import static tk.yjservers.deathswap.Commands.team.team2;
+import static tk.yjservers.deathswap.Commands.team.redTeam;
+import static tk.yjservers.deathswap.Commands.team.blueTeam;
 import static tk.yjservers.deathswap.DeathSwap.gm;
 import static tk.yjservers.deathswap.DeathSwap.state;
 
@@ -25,18 +25,18 @@ public class start implements CommandExecutor {
             sender.sendMessage(ChatColor.RED + "The game has already started!");
             return true;
         }
-        if (team1.getSize() < 1) {
+        if (redTeam.getSize() < 1) {
             sender.sendMessage(ChatColor.RED + "Red team has no players...");
             return true;
         }
-        if (team2.getSize() < 1) {
+        if (blueTeam.getSize() < 1) {
             sender.sendMessage(ChatColor.RED + "Blue team has no players...");
             return true;
         }
         List<String> notReady = new ArrayList<>();
         for (Player p : Bukkit.getOnlinePlayers()) {
             String pname = p.getDisplayName();
-            if (!(team1.hasEntry(pname) || team2.hasEntry(pname))) {
+            if (!(redTeam.hasEntry(pname) || blueTeam.hasEntry(pname))) {
                 notReady.add(pname);
             }
         }

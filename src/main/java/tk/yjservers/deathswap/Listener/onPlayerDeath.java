@@ -12,8 +12,8 @@ import tk.yjservers.deathswap.Commands.team;
 import tk.yjservers.deathswap.DeathSwap;
 import tk.yjservers.deathswap.States.Main;
 
-import static tk.yjservers.deathswap.Commands.team.team1;
-import static tk.yjservers.deathswap.Commands.team.team2;
+import static tk.yjservers.deathswap.Commands.team.redTeam;
+import static tk.yjservers.deathswap.Commands.team.blueTeam;
 import static tk.yjservers.deathswap.DeathSwap.gm;
 import static tk.yjservers.deathswap.DeathSwap.state;
 
@@ -27,17 +27,17 @@ public class onPlayerDeath implements Listener {
             Player p = e.getEntity();
             p.setGameMode(GameMode.SPECTATOR);
             String pname = p.getDisplayName();
-            if (team1.hasEntry(pname)) {
-                team1.removeEntry(pname);
-                Bukkit.broadcastMessage(ChatColor.RED + "" + ChatColor.BOLD + "Red" + ChatColor.RESET + ChatColor.YELLOW + " has " + team1.getSize() + " players left!");
-                if (team1.getSize() <= 0) {
-                    new Main().endGame(team.Teams.team2);
+            if (redTeam.hasEntry(pname)) {
+                redTeam.removeEntry(pname);
+                Bukkit.broadcastMessage(ChatColor.RED + "" + ChatColor.BOLD + "Red" + ChatColor.RESET + ChatColor.YELLOW + " has " + redTeam.getSize() + " players left!");
+                if (redTeam.getSize() <= 0) {
+                    new Main().endGame(team.Teams.blueTeam);
                 }
-            } else if (team2.hasEntry(pname)) {
-                team2.removeEntry(pname);
-                Bukkit.broadcastMessage(ChatColor.BLUE + "" + ChatColor.BOLD + "Blue" + ChatColor.RESET + ChatColor.YELLOW + " has " + team2.getSize() + " players left!");
-                if (team2.getSize() <= 0) {
-                    new Main().endGame(team.Teams.team1);
+            } else if (blueTeam.hasEntry(pname)) {
+                blueTeam.removeEntry(pname);
+                Bukkit.broadcastMessage(ChatColor.BLUE + "" + ChatColor.BOLD + "Blue" + ChatColor.RESET + ChatColor.YELLOW + " has " + blueTeam.getSize() + " players left!");
+                if (blueTeam.getSize() <= 0) {
+                    new Main().endGame(team.Teams.redTeam);
                 }
             }
 

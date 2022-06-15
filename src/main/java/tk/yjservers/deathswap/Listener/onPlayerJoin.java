@@ -9,12 +9,9 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.javatuples.Pair;
-import tk.yjservers.deathswap.DeathSwap;
 
-import java.util.AbstractMap;
-
-import static tk.yjservers.deathswap.Commands.team.team1;
-import static tk.yjservers.deathswap.Commands.team.team2;
+import static tk.yjservers.deathswap.Commands.team.redTeam;
+import static tk.yjservers.deathswap.Commands.team.blueTeam;
 import static tk.yjservers.deathswap.DeathSwap.lobby;
 import static tk.yjservers.deathswap.DeathSwap.state;
 import static tk.yjservers.deathswap.Listener.onPlayerLeave.dcPlayers;
@@ -33,7 +30,7 @@ public class onPlayerJoin implements Listener {
                 p.setFoodLevel(20);
                 break;
             case MAIN:
-                if (!(team1.hasEntry(pname) || team2.hasEntry(pname))) {
+                if (!(redTeam.hasEntry(pname) || blueTeam.hasEntry(pname))) {
                     e.getPlayer().setGameMode(GameMode.SPECTATOR);
                     e.getPlayer().sendMessage(ChatColor.GRAY + "The game has already started. Use spectator's mode teleport to see players.");
                 } else {
