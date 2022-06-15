@@ -1,5 +1,6 @@
 package tk.yjservers.deathswap;
 
+import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.WorldType;
 import org.bukkit.configuration.InvalidConfigurationException;
@@ -24,6 +25,7 @@ public final class DeathSwap extends JavaPlugin {
 
     private String levelname;
     public static States state;
+    public static World lobby;
     public static World ds1;
     public static World ds2;
     public static FileConfiguration config;
@@ -53,6 +55,7 @@ public final class DeathSwap extends JavaPlugin {
             e.printStackTrace();
             levelname = "world";
         }
+        lobby = Bukkit.getWorld(levelname);
 
         if (config.getBoolean("server.setuprestart.enable")) {
             try {

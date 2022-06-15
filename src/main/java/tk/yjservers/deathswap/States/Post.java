@@ -33,7 +33,7 @@ public class Post {
         });
         for (Player p : Bukkit.getOnlinePlayers()) {
             bar.addPlayer(p);
-            p.setGameMode(GameMode.CREATIVE);
+            p.setGameMode(GameMode.SPECTATOR);
         }
     }
 }
