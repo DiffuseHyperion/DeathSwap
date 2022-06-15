@@ -10,6 +10,10 @@ game:
       max: 240
     # Inform players about a forced swap (done with /swap during an active game)
     informforceswap: true
+  # Config related to post-game
+  post:
+    # How long before restarting the server after the game end.
+    restart: 30
 
 
 # Config for certain actions the plugin will do on your server.

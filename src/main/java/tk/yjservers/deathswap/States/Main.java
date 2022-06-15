@@ -5,6 +5,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.boss.BarColor;
 import org.bukkit.boss.BarStyle;
+import org.bukkit.boss.BossBar;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import tk.yjservers.deathswap.Commands.team;
@@ -29,10 +30,11 @@ public class Main {
         }
         int swapMin = config.getInt("game.swap.swaptimer.min");
         int swapMax = config.getInt("game.swap.swaptimer.max");
+        BossBar bar = gm.GamePlayer.timer(15,
+                "Game has started! Swaps happen every " + swapMin + " - " + swapMax + " seconds.",
+                BarColor.YELLOW, BarStyle.SOLID);
         for (Player p : Bukkit.getOnlinePlayers()) {
-            gm.GamePlayer.timer(p, 15,
-                    "Game has started! Swaps happen every " + swapMin + " - " + swapMax + " seconds.",
-                    BarColor.YELLOW, BarStyle.SOLID);
+            bar.addPlayer(p);
         }
 
         swapTask = new BukkitRunnable() {
@@ -51,37 +53,42 @@ public class Main {
     }
 
     public void swapPlayers() {
-        for (Player p : Bukkit.getOnlinePlayers()) {
-            gm.GamePlayer.timer(p, 10,
-                    "Swap is happening in " + GamePlayer.timerReplacement.TIME_LEFT + " seconds!",
-                    BarColor.RED, BarStyle.SOLID, new BukkitRunnable() {
-                        @Override
-                        public void run() {
-                            HashMap<Location, String> team1Locs = new HashMap<>();
-                            HashMap<Location, String> team2Locs = new HashMap<>();
-                            for (String s : team1.getEntries()) {
-                                team1Locs.put(Objects.requireNonNull(Bukkit.getPlayer(s)).getLocation(), s);
-                            }
-                            for (String s : team2.getEntries()) {
-                                team2Locs.put(Objects.requireNonNull(Bukkit.getPlayer(s)).getLocation(), s);
-                            }
-
-                            for (String s : team1.getEntries()) {
-                                Player p = Objects.requireNonNull(Bukkit.getPlayer(s));
-                                Set<Location> arraySet = team2Locs.keySet();
-                                Location loc = (Location) arraySet.toArray()[new Random().nextInt(arraySet.size())];
-                                p.teleport(loc);
-                                p.sendMessage(ChatColor.RED + "Teleporting to " + ChatColor.BOLD + team2Locs.get(loc) + "!");
-                            }
-                            for (String s : team2.getEntries()) {
-                                Player p = Objects.requireNonNull(Bukkit.getPlayer(s));
-                                Set<Location> arraySet = team1Locs.keySet();
-                                Location loc = (Location) arraySet.toArray()[new Random().nextInt(arraySet.size())];
-                                p.teleport(loc);
-                                p.sendMessage(ChatColor.RED + "Teleporting to " + ChatColor.BOLD + team1Locs.get(loc) + "!");
-                            }
+        BossBar bar = gm.GamePlayer.timer(10,
+                "Swap is happening in " + GamePlayer.timerReplacement.TIME_LEFT.getString() + " seconds!",
+                BarColor.RED, BarStyle.SOLID, new BukkitRunnable() {
+                    @Override
+                    public void run() {
+                        HashMap<Location, String> team1Locs = new HashMap<>();
+                        HashMap<Location, String> team2Locs = new HashMap<>();
+                        for (String s : team1.getEntries()) {
+                            team1Locs.put(Objects.requireNonNull(Bukkit.getPlayer(s)).getLocation(), s);
                         }
-                    });
+                        for (String s : team2.getEntries()) {
+                            team2Locs.put(Objects.requireNonNull(Bukkit.getPlayer(s)).getLocation(), s);
+                        }
+
+                        for (String s : team1.getEntries()) {
+                            Player p = Objects.requireNonNull(Bukkit.getPlayer(s));
+
+                            Set<Location> arraySet = team2Locs.keySet();
+                            Location loc = (Location) arraySet.toArray()[new Random().nextInt(arraySet.size())];
+
+                            p.teleport(loc);
+                            p.sendMessage(ChatColor.RED + "Teleporting to " + ChatColor.BOLD + team2Locs.get(loc) + "!");
+                        }
+                        for (String s : team2.getEntries()) {
+                            Player p = Objects.requireNonNull(Bukkit.getPlayer(s));
+
+                            Set<Location> arraySet = team1Locs.keySet();
+                            Location loc = (Location) arraySet.toArray()[new Random().nextInt(arraySet.size())];
+
+                            p.teleport(loc);
+                            p.sendMessage(ChatColor.RED + "Teleporting to " + ChatColor.BOLD + team1Locs.get(loc) + "!");
+                        }
+                    }
+                });
+        for (Player p : Bukkit.getOnlinePlayers()) {
+            bar.addPlayer(p);
         }
     }
 

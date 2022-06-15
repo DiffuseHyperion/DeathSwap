@@ -1,6 +1,5 @@
 package tk.yjservers.deathswap;
 
-import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.WorldType;
 import org.bukkit.configuration.InvalidConfigurationException;
@@ -12,6 +11,7 @@ import tk.yjservers.deathswap.Commands.swap;
 import tk.yjservers.deathswap.Commands.team;
 import tk.yjservers.deathswap.Listener.onPlayerDeath;
 import tk.yjservers.deathswap.Listener.onPlayerJoin;
+import tk.yjservers.deathswap.Listener.onPlayerLeave;
 import tk.yjservers.gamemaster.GameMaster;
 import tk.yjservers.gamemaster.GameServer;
 import tk.yjservers.gamemaster.GameWorld;
@@ -117,6 +117,7 @@ public final class DeathSwap extends JavaPlugin {
         Objects.requireNonNull(getCommand("swap")).setExecutor(new swap());
         getServer().getPluginManager().registerEvents(new onPlayerDeath(), this);
         getServer().getPluginManager().registerEvents(new onPlayerJoin(), this);
+        getServer().getPluginManager().registerEvents(new onPlayerLeave(), this);
 
         getLogger().info("Creating deathswap and lobby worlds...");
         Long seed = new Random().nextLong();
