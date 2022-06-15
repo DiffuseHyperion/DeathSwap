@@ -3,6 +3,7 @@ package tk.yjservers.deathswap.States;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
+import org.bukkit.Sound;
 import org.bukkit.boss.BarColor;
 import org.bukkit.boss.BarStyle;
 import org.bukkit.boss.BossBar;
@@ -49,10 +50,11 @@ public class Main {
             }
         };
         swapTask.runTaskTimer(plugin, 0, 1);
-
+        gm.GamePlayer.playSoundToAll(Sound.ENTITY_ENDER_DRAGON_GROWL);
     }
 
     public void swapPlayers() {
+        gm.GamePlayer.playSoundToAll(Sound.ENTITY_WITHER_SPAWN);
         BossBar bar = gm.GamePlayer.timer(10,
                 "Swap is happening in " + GamePlayer.timerReplacement.TIME_LEFT.getString() + " seconds!",
                 BarColor.RED, BarStyle.SOLID, new BukkitRunnable() {

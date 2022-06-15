@@ -15,24 +15,32 @@ import tk.yjservers.deathswap.DeathSwap;
 import tk.yjservers.deathswap.States.Main;
 import tk.yjservers.gamemaster.GamePlayer;
 
+import java.util.AbstractMap;
+import java.util.HashMap;
+import java.util.Map;
+
 import static tk.yjservers.deathswap.Commands.team.team1;
 import static tk.yjservers.deathswap.Commands.team.team2;
-import static tk.yjservers.deathswap.DeathSwap.gm;
-import static tk.yjservers.deathswap.DeathSwap.state;
+import static tk.yjservers.deathswap.DeathSwap.*;
 
 public class onPlayerLeave implements Listener {
+
+    public static HashMap<String, Map.Entry<Boolean, BossBar>> rejoined = new HashMap<>();
 
     @EventHandler
     public void OnPlayerLeave(PlayerQuitEvent e) {
         if (state != DeathSwap.States.PREGAME) {
             Player p = e.getPlayer();
             String pname = p.getDisplayName();
-            if (!(team1.hasEntry(pname) || team2.hasEntry(pname))) {
-                BossBar bar = gm.GamePlayer.timer(60,
+            if (team1.hasEntry(pname) || team2.hasEntry(pname)) {
+                BossBar bar = gm.GamePlayer.timer(config.getInt("game.reconnect.grace"),
                         pname + " has disconnected! He will be kicked from the game in " + GamePlayer.timerReplacement.TIME_LEFT.getString() + " seconds!",
                         BarColor.WHITE, BarStyle.SEGMENTED_10, new BukkitRunnable() {
                             @Override
                             public void run() {
+                                if (rejoined.get(pname).getKey()) {
+                                    this.cancel();
+                                }
                                 if (team1.hasEntry(pname)) {
                                     team1.removeEntry(pname);
                                     Bukkit.broadcastMessage(ChatColor.RED + "" + ChatColor.BOLD + "Red" + ChatColor.RESET + ChatColor.YELLOW + " has " + team1.getSize() + " players left!");
@@ -48,6 +56,7 @@ public class onPlayerLeave implements Listener {
                                 }
                             }
                         });
+                rejoined.put(pname, new AbstractMap.SimpleEntry<>(false, bar));
                 for (Player p1 : Bukkit.getOnlinePlayers()) {
                     bar.addPlayer(p1);
                 }
