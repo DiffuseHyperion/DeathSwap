@@ -86,6 +86,7 @@ public final class DeathSwap extends JavaPlugin {
 
                     GameServer.OSTypes os;
                     if (config.isSet("server.setuprestart.os")) {
+
                         String configOS = config.getString("server.setuprestart.os");
                         if (containsOS(configOS)) {
                             os = GameServer.OSTypes.valueOf(configOS);
@@ -93,16 +94,20 @@ public final class DeathSwap extends JavaPlugin {
                             getLogger().info("Unknown OS specified in config.yml! Resorting to automatic detection.");
                             os = gm.GameServer.getOS();
                         }
+
                     } else {
                         getLogger().info("No OS specified in config. Attempting automatic detection.");
                         os = gm.GameServer.getOS();
                     }
+
                     getLogger().info("Detected operating system: " + os.toString());
 
                     if (os != GameServer.OSTypes.Unknown) {
-                        boolean proceed;
                         getLogger().info("Getting server jar's name...");
+
+                        boolean proceed;
                         String serverJar = null;
+
                         if (config.isSet("server.setuprestart.jarname")){
                             serverJar = config.getString("server.setuprestart.jarname");
                             proceed = true;
@@ -118,6 +123,7 @@ public final class DeathSwap extends JavaPlugin {
                                 proceed = false;
                             }
                         }
+
                         if (proceed) {
                             getLogger().info("Server jar name: " + serverJar);
 
