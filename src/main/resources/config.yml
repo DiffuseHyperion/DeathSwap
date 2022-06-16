@@ -8,17 +8,17 @@ game:
       min: 120
       # Maximum amount of time per swap. Unit is seconds.
       max: 240
-    # How long do players have to prepare when a swap is announced.
+    # How long do players have to prepare when a swap is announced. Unit is seconds.
     time: 10
     # Inform players about a forced swap (done with /swap during an active game)
     informforceswap: true
   # Config related to reconnection of a player.
   reconnect:
-    # How long a player has to reconnect to the server if they leave.
+    # How long a player has to reconnect to the server if they leave. Unit is seconds.
     grace: 60
   # Config related to post-game
   post:
-    # How long before restarting the server after the game end.
+    # How long before restarting the server after the game end. Unit is seconds.
     restart: 30
 
 
