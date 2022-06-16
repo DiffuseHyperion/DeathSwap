@@ -68,7 +68,7 @@ public class Main {
         gm.GamePlayer.playSoundToAll(Sound.ENTITY_WITHER_SPAWN);
         int time = config.getInt("game.swap.time");
         BossBar bar = gm.GamePlayer.timer(time,
-                "A swap is happening in " + GamePlayer.timerReplacement.TIME_LEFT.getString() + " seconds!",
+                "A swap is happening in " + GamePlayer.timerReplacement.TIME_LEFT + " seconds!",
                 BarColor.RED, BarStyle.SOLID, new BukkitRunnable() {
                     @Override
                     public void run() {

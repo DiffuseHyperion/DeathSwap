@@ -33,7 +33,7 @@ public class onPlayerLeave implements Listener {
             String pname = p.getDisplayName();
             if (redTeam.hasEntry(pname) || blueTeam.hasEntry(pname)) {
                 Pair<BossBar, BukkitRunnable> pair = gm.GamePlayer.timerWithTask(config.getInt("game.reconnect.grace"),
-                        pname + " has disconnected! He will be kicked from the game in " + GamePlayer.timerReplacement.TIME_LEFT.getString() + " seconds!",
+                        pname + " has disconnected! He will be kicked from the game in " + GamePlayer.timerReplacement.TIME_LEFT + " seconds!",
                         BarColor.WHITE, BarStyle.SEGMENTED_10, new BukkitRunnable() {
                             @Override
                             public void run() {

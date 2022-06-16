@@ -42,10 +42,13 @@ public final class DeathSwap extends JavaPlugin {
         assert gm != null;
 
         getLogger().info("Getting configuration...");
-        saveDefaultConfig();
-        config = getConfig();
+        this.saveDefaultConfig();
+
+        config = this.getConfig();
+
         state = States.PREGAME;
         plugin = this;
+
         String levelname;
         try {
             levelname = new GameServer().readServerProperties("level-name");
@@ -82,7 +85,7 @@ public final class DeathSwap extends JavaPlugin {
                     getLogger().info("Detected that auto setup restart was enabled! Getting operating system.");
 
                     GameServer.OSTypes os;
-                    if (config.contains("server.setuprestart.os")) {
+                    if (config.isSet("server.setuprestart.os")) {
                         String configOS = config.getString("server.setuprestart.os");
                         if (containsOS(configOS)) {
                             os = GameServer.OSTypes.valueOf(configOS);
@@ -91,28 +94,43 @@ public final class DeathSwap extends JavaPlugin {
                             os = gm.GameServer.getOS();
                         }
                     } else {
+                        getLogger().info("No OS specified in config. Attempting automatic detection.");
                         os = gm.GameServer.getOS();
                     }
                     getLogger().info("Detected operating system: " + os.toString());
 
                     if (os != GameServer.OSTypes.Unknown) {
+                        boolean proceed;
                         getLogger().info("Getting server jar's name...");
-                        String serverJar;
-                        if (config.contains("server.setuprestart.jarname")){
+                        String serverJar = null;
+                        if (config.isSet("server.setuprestart.jarname")){
                             serverJar = config.getString("server.setuprestart.jarname");
+                            proceed = true;
                         } else {
-                            serverJar = gm.GameServer.getServerJar().getName();
+                            getLogger().info("No server jar specified in config. Attempting automatic detection.");
+                            try {
+                                serverJar = gm.GameServer.getServerJar().getName();
+                                proceed = true;
+                            } catch (NoClassDefFoundError e) {
+                                getLogger().severe("The server jar could not be detected!");
+                                getLogger().severe("You need to specify it yourself in the config.");
+                                getLogger().severe("Aborting restart setup.");
+                                proceed = false;
+                            }
                         }
+                        if (proceed) {
+                            getLogger().info("Server jar name: " + serverJar);
 
-                        getLogger().info("Server jar name: " + serverJar);
-
-                        getLogger().info("Setting up restart...");
-                        if (gm.GameServer.setupRestart(os, serverJar)) {
-                            getLogger().info("This plugin has created a file called restart.bat/restart.sh, please do not delete it!");
-                            getLogger().info("The restart will take effect on next server boot.");
+                            getLogger().info("Setting up restart...");
+                            if (gm.GameServer.setupRestart(os, serverJar)) {
+                                getLogger().info("This plugin has created a file called restart.bat/restart.sh, please do not delete it!");
+                                getLogger().info("The restart will take effect on next server boot.");
+                            }
                         }
                     } else {
-                        getLogger().info("The plugin was unable to find your operating system. Aborting restart setup.");
+                        getLogger().severe("The plugin was unable to find your operating system.");
+                        getLogger().severe("You need to specify it yourself in the config.");
+                        getLogger().severe("Aborting restart setup.");
                     }
                 }
             } catch (IOException | InvalidConfigurationException e) {

@@ -30,10 +30,10 @@ server:
     # Enable this section?
     enable: false
     # The name of your server jar. Leave blank to let the plugin get it, but this might cause errors!
-    jarname: spigot-1.19.jar
+    jarname: test.jar
     # The operating system of your server. Leave blank to let the plugin get it.
     # Accepted values: Windows, Mac, Unix, Solaris
-    os: Unix
+    os: Solaris
   # Changes some properties in your server for optimization/balancing.
   changeproperties:
     # Whether to disable the nether.

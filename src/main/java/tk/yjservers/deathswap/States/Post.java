@@ -29,7 +29,7 @@ public class Post {
             }
             Bukkit.broadcastMessage(ChatColor.BLUE + "Blue" + ChatColor.YELLOW + " has won the game!");
         }
-        BossBar bar = gm.GamePlayer.timer(config.getInt("game.post.restart"), "Server is restarting in " + GamePlayer.timerReplacement.TIME_LEFT.getString() + " seconds!", BarColor.WHITE, BarStyle.SEGMENTED_10, new BukkitRunnable() {
+        BossBar bar = gm.GamePlayer.timer(config.getInt("game.post.restart"), "Server is restarting in " + GamePlayer.timerReplacement.TIME_LEFT + " seconds!", BarColor.WHITE, BarStyle.SEGMENTED_10, new BukkitRunnable() {
             @Override
             public void run() {
                 gm.GameServer.restart();
