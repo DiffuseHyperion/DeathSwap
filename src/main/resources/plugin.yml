@@ -9,6 +9,7 @@ commands:
   team:
     description: Set your team!
     usage: /team red/blue
+    permission: deathswap.team
   start:
     description: Start the game!
     usage: /start
@@ -17,8 +18,16 @@ commands:
     description: Force a swap during a game!
     usage: /swap
     permission: deathswap.swap
+  reloadconfig:
+    description: Reload this plugin's config.
+    permission: deathswap.reloadconfig
 permissions:
+  deathswap.team:
+    description: Permissions to select a team.
+    default: true
   deathswap.start:
     description: Permissions to start the game.
   deathswap.swap:
     description: Permissions to force a swap during a game.
+  deathswap.reloadconfig:
+    description: Permissions to reload the plugin's config.

@@ -7,6 +7,7 @@ import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
+import tk.yjservers.deathswap.Commands.reloadconfig;
 import tk.yjservers.deathswap.Commands.start;
 import tk.yjservers.deathswap.Commands.swap;
 import tk.yjservers.deathswap.Commands.team;
@@ -43,8 +44,8 @@ public final class DeathSwap extends JavaPlugin {
 
         getLogger().info("Getting configuration...");
         this.saveDefaultConfig();
-
         config = this.getConfig();
+        this.saveConfig();
 
         state = States.PREGAME;
         plugin = this;
@@ -161,6 +162,7 @@ public final class DeathSwap extends JavaPlugin {
         Objects.requireNonNull(getCommand("team")).setExecutor(new team());
         Objects.requireNonNull(getCommand("start")).setExecutor(new start());
         Objects.requireNonNull(getCommand("swap")).setExecutor(new swap());
+        Objects.requireNonNull(getCommand("reloadconfig")).setExecutor(new reloadconfig());
         getServer().getPluginManager().registerEvents(new onPlayerDeath(), this);
         getServer().getPluginManager().registerEvents(new onPlayerJoin(), this);
         getServer().getPluginManager().registerEvents(new onPlayerLeave(), this);

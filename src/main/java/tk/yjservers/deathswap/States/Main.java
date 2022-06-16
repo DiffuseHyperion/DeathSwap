@@ -49,7 +49,7 @@ public class Main {
                     public void run() {
                         swapPlayers();
                     }
-                }.runTaskLater(plugin, new Random().nextInt(swapMin, swapMax + 1) * 1000L);
+                }.runTaskTimer(plugin, 0, new Random().nextInt(swapMin, swapMax + 1) * 20L);
             }
         };
         swapTask.runTaskTimer(plugin, 0, 1);
