@@ -24,10 +24,10 @@ public class Main {
 
     public void start() {
         for (String s : redTeam.getEntries()) {
-            Objects.requireNonNull(Bukkit.getPlayer(s)).teleport(ds1.getSpawnLocation());
+            Objects.requireNonNull(Bukkit.getPlayer(s)).teleport(ds1.getSpawnLocation().add(0.5, 0, 0.5));
         }
         for (String s : blueTeam.getEntries()) {
-            Objects.requireNonNull(Bukkit.getPlayer(s)).teleport(ds2.getSpawnLocation());
+            Objects.requireNonNull(Bukkit.getPlayer(s)).teleport(ds2.getSpawnLocation().add(0.5, 0, 0.5));
         }
         int swapMin = config.getInt("game.swap.swaptimer.min");
         int swapMax = config.getInt("game.swap.swaptimer.max");

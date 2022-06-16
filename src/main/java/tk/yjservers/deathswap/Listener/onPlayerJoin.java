@@ -27,11 +27,11 @@ public class onPlayerJoin implements Listener {
             case PREGAME:
                 Bukkit.getLogger().warning("Minecraft may start complaining about not being able to save data for " + pname + ", this is fine and can be disregarded.");
                 p.setGameMode(GameMode.ADVENTURE);
-                p.teleport(lobby.getSpawnLocation());
+                p.teleport(lobby.getSpawnLocation().add(0.5, 0, 0.5));
                 p.setHealth(20);
                 p.setFoodLevel(20);
                 p.setSaturation(5);
-                p.sendMessage(ChatColor.YELLOW + "Welcome to DeathSwap! Use /team red/blue to choose a team!");
+                p.sendMessage(ChatColor.YELLOW + "Welcome to DeathSwap! Use /team red or /team blue to choose a team!");
                 break;
             case MAIN:
                 if (!(redTeam.hasEntry(pname) || blueTeam.hasEntry(pname))) {
@@ -45,7 +45,7 @@ public class onPlayerJoin implements Listener {
                 break;
             case POSTGAME:
                 p.setGameMode(GameMode.SPECTATOR);
-                p.teleport(lobby.getSpawnLocation());
+                p.teleport(lobby.getSpawnLocation().add(0.5, 0, 0.5));
                 p.setHealth(20);
                 p.setFoodLevel(20);
                 p.setSaturation(5);
