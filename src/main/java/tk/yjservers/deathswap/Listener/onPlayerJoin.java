@@ -1,5 +1,6 @@
 package tk.yjservers.deathswap.Listener;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.boss.BossBar;
@@ -24,10 +25,13 @@ public class onPlayerJoin implements Listener {
         String pname = p.getDisplayName();
         switch (state) {
             case PREGAME:
+                Bukkit.getLogger().warning("Minecraft may start complaining about not being able to save data for " + pname + ", this is fine and can be disregarded.");
                 p.setGameMode(GameMode.ADVENTURE);
                 p.teleport(lobby.getSpawnLocation());
                 p.setHealth(20);
                 p.setFoodLevel(20);
+                p.setSaturation(5);
+                p.sendMessage(ChatColor.YELLOW + "Welcome to DeathSwap! Use /team red/blue to choose a team!");
                 break;
             case MAIN:
                 if (!(redTeam.hasEntry(pname) || blueTeam.hasEntry(pname))) {
@@ -44,6 +48,7 @@ public class onPlayerJoin implements Listener {
                 p.teleport(lobby.getSpawnLocation());
                 p.setHealth(20);
                 p.setFoodLevel(20);
+                p.setSaturation(5);
                 p.sendMessage(ChatColor.GRAY + "The game has already ended! Join back soon to play the next game!");
                 break;
         }
