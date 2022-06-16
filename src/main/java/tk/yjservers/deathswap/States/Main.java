@@ -36,6 +36,8 @@ public class Main {
                 BarColor.YELLOW, BarStyle.SOLID);
         for (Player p : Bukkit.getOnlinePlayers()) {
             bar.addPlayer(p);
+            p.setHealth(20);
+            p.setFoodLevel(20);
         }
 
         swapTask = new BukkitRunnable() {
