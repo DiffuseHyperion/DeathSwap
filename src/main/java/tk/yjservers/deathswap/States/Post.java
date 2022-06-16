@@ -20,12 +20,14 @@ public class Post {
         gm.GamePlayer.playSoundToAll(Sound.UI_TOAST_CHALLENGE_COMPLETE);
         if (winner.equals(team.Teams.redTeam)) {
             for (Player p : Bukkit.getOnlinePlayers()) {
-                p.sendTitle(ChatColor.RED + "Red has won the game!", "Congratulations!", 10, 70, 20);
+                p.sendTitle(ChatColor.RED + "Red" + ChatColor.YELLOW + " has won the game!", ChatColor.YELLOW + "Congratulations!", 10, 70, 20);
             }
+            Bukkit.broadcastMessage(ChatColor.RED + "Red" + ChatColor.YELLOW + " has won the game!");
         } else {
             for (Player p : Bukkit.getOnlinePlayers()) {
-                p.sendTitle(ChatColor.RED + "Blue has won the game!", "Congratulations!", 10, 70, 20);
+                p.sendTitle(ChatColor.BLUE + "Blue" + ChatColor.YELLOW + " has won the game!", ChatColor.YELLOW + "Congratulations!", 10, 70, 20);
             }
+            Bukkit.broadcastMessage(ChatColor.BLUE + "Blue" + ChatColor.YELLOW + " has won the game!");
         }
         BossBar bar = gm.GamePlayer.timer(config.getInt("game.post.restart"), "Server is restarting in " + GamePlayer.timerReplacement.TIME_LEFT.getString() + " seconds!", BarColor.WHITE, BarStyle.SEGMENTED_10, new BukkitRunnable() {
             @Override

@@ -66,8 +66,9 @@ public class Main {
             return;
         }
         gm.GamePlayer.playSoundToAll(Sound.ENTITY_WITHER_SPAWN);
-        BossBar bar = gm.GamePlayer.timer(10,
-                "Swap is happening in " + GamePlayer.timerReplacement.TIME_LEFT.getString() + " seconds!",
+        int time = config.getInt("game.swap.time");
+        BossBar bar = gm.GamePlayer.timer(time,
+                "A swap is happening in " + GamePlayer.timerReplacement.TIME_LEFT.getString() + " seconds!",
                 BarColor.RED, BarStyle.SOLID, new BukkitRunnable() {
                     @Override
                     public void run() {
@@ -100,6 +101,7 @@ public class Main {
                         }
                     }
                 });
+        Bukkit.broadcastMessage(ChatColor.YELLOW + "A swap is happening in " + ChatColor.BOLD + time + " seconds!");
         for (Player p : Bukkit.getOnlinePlayers()) {
             bar.addPlayer(p);
         }
