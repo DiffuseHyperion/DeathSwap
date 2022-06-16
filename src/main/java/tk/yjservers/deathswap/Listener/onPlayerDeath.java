@@ -42,7 +42,7 @@ public class onPlayerDeath implements Listener {
             }
 
             gm.GamePlayer.playSoundToAll(Sound.ENTITY_WITHER_DEATH);
-            p.sendMessage(ChatColor.GRAY + "You have died!. Use spectator's mode teleport to see players.");
+            p.sendMessage(ChatColor.GRAY + "You have died! Use spectator's mode teleport to see players.");
         }
     }
 }
