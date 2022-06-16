@@ -25,7 +25,7 @@ public class onPlayerJoin implements Listener {
         switch (state) {
             case PREGAME:
                 p.setGameMode(GameMode.ADVENTURE);
-                p.teleport(lobby.getSpawnLocation().add(0.5, 0, 0.5));
+                p.teleport(lobby.getSpawnLocation());
                 p.setHealth(20);
                 p.setFoodLevel(20);
                 break;
@@ -41,7 +41,7 @@ public class onPlayerJoin implements Listener {
                 break;
             case POSTGAME:
                 p.setGameMode(GameMode.SPECTATOR);
-                p.teleport(lobby.getSpawnLocation().add(0.5, 0, 0.5));
+                p.teleport(lobby.getSpawnLocation());
                 p.setHealth(20);
                 p.setFoodLevel(20);
                 p.sendMessage(ChatColor.GRAY + "The game has already ended! Join back soon to play the next game!");
