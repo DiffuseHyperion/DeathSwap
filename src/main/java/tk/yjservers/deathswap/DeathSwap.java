@@ -23,7 +23,6 @@ import java.util.Random;
 
 public final class DeathSwap extends JavaPlugin {
 
-    private String levelname;
     public static States state;
     public static World lobby;
     public static World ds1;
@@ -47,6 +46,7 @@ public final class DeathSwap extends JavaPlugin {
         config = getConfig();
         state = States.PREGAME;
         plugin = this;
+        String levelname;
         try {
             levelname = new GameServer().readServerProperties("level-name");
             getLogger().info("Found lobby name (level-name in server.properties): " + levelname);
@@ -56,6 +56,25 @@ public final class DeathSwap extends JavaPlugin {
             levelname = "world";
         }
         lobby = Bukkit.getWorld(levelname);
+
+        getLogger().info("Deleting deathswap worlds...");
+        getLogger().info("Deleting overworld...");
+        gm.GameWorld.deleteWorld("deathswap-1");
+        gm.GameWorld.deleteWorld("deathswap-2");
+        if (!config.getBoolean("server.changeproperties.nether")) {
+            getLogger().info("Deleting nether...");
+            gm.GameWorld.deleteWorld("deathswap-1-nether");
+            gm.GameWorld.deleteWorld("deathswap-2-nether");
+        }
+        if (!config.getBoolean("server.changeproperties.end")) {
+            getLogger().info("Deleting end...");
+            gm.GameWorld.deleteWorld("deathswap-1-end");
+            gm.GameWorld.deleteWorld("deathswap-2-end");
+        }
+        getLogger().info("Deleting lobby world...");
+        gm.GameWorld.deleteWorld(levelname);
+        gm.GameWorld.deleteWorld(levelname + "_nether");
+        gm.GameWorld.deleteWorld(levelname + "_the_end");
 
         if (config.getBoolean("server.setuprestart.enable")) {
             try {
@@ -156,27 +175,7 @@ public final class DeathSwap extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        GameWorld gw = new GameWorld();
-        getLogger().info("Deleting deathswap worlds...");
-        getLogger().info("Deleting overworld...");
-        gw.deleteWorld("deathswap-1");
-        gw.deleteWorld("deathswap-2");
-        if (!config.getBoolean("server.changeproperties.nether")) {
-            getLogger().info("Deleting nether...");
-            gw.deleteWorld("deathswap-1-nether");
-            gw.deleteWorld("deathswap-2-nether");
-        }
-        if (!config.getBoolean("server.changeproperties.end")) {
-            getLogger().info("Deleting end...");
-            gw.deleteWorld("deathswap-1-end");
-            gw.deleteWorld("deathswap-2-end");
-        }
-        getLogger().info("Deleting lobby world...");
-        gw.deleteWorld(levelname);
-        gw.deleteWorld(levelname + "_nether");
-        gw.deleteWorld(levelname + "_the_end");
         getLogger().warning("You may see errors coming from minecraft after this message! This is fine and can be ignored.");
-        getLogger().info("Finished disabling. Zzz...");
     }
 
 }
