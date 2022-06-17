@@ -24,8 +24,6 @@ game:
   post:
     # How long before restarting the server after the game end. Unit is seconds.
     restart: 30
-
-
 # Config for certain actions the plugin will do on your server.
 # This is spooky by nature, you can choose to disable it.
 server:

@@ -14,10 +14,12 @@ import tk.yjservers.gamemaster.GamePlayer;
 
 import static tk.yjservers.deathswap.DeathSwap.config;
 import static tk.yjservers.deathswap.DeathSwap.gm;
+import static tk.yjservers.deathswap.States.Main.swapTask;
 
 public class Post {
     public void start(team.Teams winner) {
         gm.GamePlayer.playSoundToAll(Sound.UI_TOAST_CHALLENGE_COMPLETE);
+        swapTask.cancel();
         if (winner.equals(team.Teams.redTeam)) {
             for (Player p : Bukkit.getOnlinePlayers()) {
                 p.sendTitle(ChatColor.RED + "Red" + ChatColor.YELLOW + " has won the game!", ChatColor.YELLOW + "Congratulations!", 10, 70, 20);

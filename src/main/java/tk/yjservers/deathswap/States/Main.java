@@ -20,7 +20,7 @@ import static tk.yjservers.deathswap.DeathSwap.*;
 
 public class Main {
 
-    private static BukkitRunnable swapTask;
+    public static BukkitRunnable swapTask;
 
     public void start() {
         for (String s : redTeam.getEntries()) {
@@ -47,7 +47,7 @@ public class Main {
                 swapPlayers();
             }
         };
-        swapTask.runTaskTimer(plugin, config.getInt("game.swap.swapdelay"), new Random().nextInt(swapMin, swapMax + 1) * 20L);
+        swapTask.runTaskTimer(plugin, config.getInt("game.swap.startdelay") * 20L, new Random().nextInt(swapMin, swapMax + 1) * 20L);
         gm.GamePlayer.playSoundToAll(Sound.ENTITY_ENDER_DRAGON_GROWL);
     }
 
