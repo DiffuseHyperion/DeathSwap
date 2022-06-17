@@ -44,8 +44,8 @@ public final class DeathSwap extends JavaPlugin {
 
         getLogger().info("Getting configuration...");
         this.saveDefaultConfig();
+        getConfig().options().copyDefaults(true);
         config = this.getConfig();
-        this.saveConfig();
 
         state = States.PREGAME;
         plugin = this;

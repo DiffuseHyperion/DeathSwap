@@ -2,6 +2,10 @@
 game:
   # Config related to swapping.
   swap:
+    # How long to show the started game timer for. Unit is seconds.
+    starttimer: 15
+    # How much to delay the swapping when a game starts. Unit is seconds.
+    startdelay: 10
     # How long between each swap.
     swaptimer:
       # Minimum amount of time per swap. Unit is seconds.
@@ -30,10 +34,10 @@ server:
     # Enable this section?
     enable: false
     # The name of your server jar. Leave blank to let the plugin get it, but this might cause errors!
-    jarname: test.jar
+    jarname:
     # The operating system of your server. Leave blank to let the plugin get it.
     # Accepted values: Windows, Mac, Unix, Solaris
-    os: Solaris
+    os:
   # Changes some properties in your server for optimization/balancing.
   changeproperties:
     # Whether to disable the nether.

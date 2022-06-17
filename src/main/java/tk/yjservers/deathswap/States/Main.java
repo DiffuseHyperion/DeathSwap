@@ -31,7 +31,7 @@ public class Main {
         }
         int swapMin = config.getInt("game.swap.swaptimer.min");
         int swapMax = config.getInt("game.swap.swaptimer.max");
-        BossBar bar = gm.GamePlayer.timer(15,
+        BossBar bar = gm.GamePlayer.timer(config.getInt("game.swap.starttimer"),
                 "Game has started! Swaps happen every " + swapMin + " - " + swapMax + " seconds.",
                 BarColor.YELLOW, BarStyle.SOLID);
         for (Player p : Bukkit.getOnlinePlayers()) {
@@ -44,15 +44,10 @@ public class Main {
         swapTask = new BukkitRunnable() {
             @Override
             public void run() {
-                new BukkitRunnable() {
-                    @Override
-                    public void run() {
-                        swapPlayers();
-                    }
-                }.runTaskTimer(plugin, 0, new Random().nextInt(swapMin, swapMax + 1) * 20L);
+                swapPlayers();
             }
         };
-        swapTask.runTaskTimer(plugin, 0, 1);
+        swapTask.runTaskTimer(plugin, config.getInt("game.swap.swapdelay"), new Random().nextInt(swapMin, swapMax + 1) * 20L);
         gm.GamePlayer.playSoundToAll(Sound.ENTITY_ENDER_DRAGON_GROWL);
     }
 
