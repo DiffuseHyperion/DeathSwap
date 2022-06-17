@@ -1,9 +1,6 @@
 package tk.yjservers.deathswap.States;
 
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Location;
-import org.bukkit.Sound;
+import org.bukkit.*;
 import org.bukkit.boss.BarColor;
 import org.bukkit.boss.BarStyle;
 import org.bukkit.boss.BossBar;
@@ -39,27 +36,28 @@ public class Main {
             p.setHealth(20);
             p.setFoodLevel(20);
             p.setSaturation(5);
+            p.setGameMode(GameMode.SURVIVAL);
         }
 
         swapTask = new BukkitRunnable() {
             @Override
             public void run() {
-                swapPlayers();
+                long delay = new Random().nextInt(swapMin, swapMax + 1) * 20L;
+                Bukkit.getLogger().info("Next swap in " + delay + "!");
+                BukkitRunnable task = new BukkitRunnable() {
+                    @Override
+                    public void run() {
+                        swapPlayers();
+                    }
+                };
+                task.runTaskLater(plugin, delay);
             }
         };
-        swapTask.runTaskTimer(plugin, config.getInt("game.swap.startdelay") * 20L, new Random().nextInt(swapMin, swapMax + 1) * 20L);
+        swapTask.runTaskTimer(plugin, 1, 1);
         gm.GamePlayer.playSoundToAll(Sound.ENTITY_ENDER_DRAGON_GROWL);
     }
 
     public void swapPlayers() {
-        if (redTeam.getSize() <= 0) {
-            Bukkit.getLogger().info("Attempting to start a swap, but " + ChatColor.RED + "red" + ChatColor.RESET + " team has no players...");
-            return;
-        }
-        if (blueTeam.getSize() <= 0) {
-            Bukkit.getLogger().info("Attempting to start a swap, but " + ChatColor.BLUE + "blue" + ChatColor.RESET + " team has no players...");
-            return;
-        }
         gm.GamePlayer.playSoundToAll(Sound.ENTITY_WITHER_SPAWN);
         int time = config.getInt("game.swap.time");
         BossBar bar = gm.GamePlayer.timer(time,
@@ -67,6 +65,14 @@ public class Main {
                 BarColor.RED, BarStyle.SOLID, new BukkitRunnable() {
                     @Override
                     public void run() {
+                        if (redTeam.getSize() == 0) {
+                            Bukkit.getLogger().info("Attempting to start a swap, but " + ChatColor.RED + "red" + ChatColor.RESET + " team has no players...");
+                            return;
+                        }
+                        if (blueTeam.getSize() == 0) {
+                            Bukkit.getLogger().info("Attempting to start a swap, but " + ChatColor.BLUE + "blue" + ChatColor.RESET + " team has no players...");
+                            return;
+                        }
                         HashMap<Location, String> team1Locs = new HashMap<>();
                         HashMap<Location, String> team2Locs = new HashMap<>();
                         for (String s : redTeam.getEntries()) {

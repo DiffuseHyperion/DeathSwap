@@ -4,8 +4,6 @@ game:
   swap:
     # How long to show the started game timer for. Unit is seconds.
     starttimer: 15
-    # How much to delay the swapping when a game starts. Unit is seconds.
-    startdelay: 10
     # How long between each swap.
     swaptimer:
       # Minimum amount of time per swap. Unit is seconds.
