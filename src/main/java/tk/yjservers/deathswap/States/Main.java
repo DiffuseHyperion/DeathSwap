@@ -39,25 +39,36 @@ public class Main {
             p.setGameMode(GameMode.SURVIVAL);
         }
 
+
+        int[] timer = {0};
+        int[] delay = {new Random().nextInt(swapMin, swapMax + 1)};
+        Bukkit.getLogger().info("Next swap in " + delay[0] + " seconds!");
         swapTask = new BukkitRunnable() {
             @Override
             public void run() {
-                long delay = new Random().nextInt(swapMin, swapMax + 1) * 20L;
-                Bukkit.getLogger().info("Next swap in " + delay + "!");
-                BukkitRunnable task = new BukkitRunnable() {
-                    @Override
-                    public void run() {
-                        swapPlayers();
-                    }
-                };
-                task.runTaskLater(plugin, delay);
+                timer[0]++;
+                if (timer[0] >= delay[0]) {
+                    delay[0] = new Random().nextInt(swapMin, swapMax + 1);
+                    Bukkit.getLogger().info("Next swap in " + delay[0] + " seconds!");
+                    timer[0] = 0;
+                    swapPlayers();
+                }
             }
         };
-        swapTask.runTaskTimer(plugin, 1, 1);
+        swapTask.runTaskTimer(plugin, 0, 20);
+
         gm.GamePlayer.playSoundToAll(Sound.ENTITY_ENDER_DRAGON_GROWL);
     }
 
     public void swapPlayers() {
+        if (redTeam.getSize() == 0) {
+            Bukkit.getLogger().info("Attempting to start a swap, but " + ChatColor.RED + "red" + ChatColor.RESET + " team has no players...");
+            return;
+        }
+        if (blueTeam.getSize() == 0) {
+            Bukkit.getLogger().info("Attempting to start a swap, but " + ChatColor.BLUE + "blue" + ChatColor.RESET + " team has no players...");
+            return;
+        }
         gm.GamePlayer.playSoundToAll(Sound.ENTITY_WITHER_SPAWN);
         int time = config.getInt("game.swap.time");
         BossBar bar = gm.GamePlayer.timer(time,
@@ -65,40 +76,34 @@ public class Main {
                 BarColor.RED, BarStyle.SOLID, new BukkitRunnable() {
                     @Override
                     public void run() {
-                        if (redTeam.getSize() == 0) {
-                            Bukkit.getLogger().info("Attempting to start a swap, but " + ChatColor.RED + "red" + ChatColor.RESET + " team has no players...");
-                            return;
-                        }
-                        if (blueTeam.getSize() == 0) {
-                            Bukkit.getLogger().info("Attempting to start a swap, but " + ChatColor.BLUE + "blue" + ChatColor.RESET + " team has no players...");
-                            return;
-                        }
-                        HashMap<Location, String> team1Locs = new HashMap<>();
-                        HashMap<Location, String> team2Locs = new HashMap<>();
-                        for (String s : redTeam.getEntries()) {
-                            team1Locs.put(Objects.requireNonNull(Bukkit.getPlayer(s)).getLocation(), s);
-                        }
-                        for (String s : blueTeam.getEntries()) {
-                            team2Locs.put(Objects.requireNonNull(Bukkit.getPlayer(s)).getLocation(), s);
-                        }
+                        if (state == States.MAIN) {
+                            HashMap<Location, String> team1Locs = new HashMap<>();
+                            HashMap<Location, String> team2Locs = new HashMap<>();
+                            for (String s : redTeam.getEntries()) {
+                                team1Locs.put(Objects.requireNonNull(Bukkit.getPlayer(s)).getLocation(), s);
+                            }
+                            for (String s : blueTeam.getEntries()) {
+                                team2Locs.put(Objects.requireNonNull(Bukkit.getPlayer(s)).getLocation(), s);
+                            }
 
-                        for (String s : redTeam.getEntries()) {
-                            Player p = Objects.requireNonNull(Bukkit.getPlayer(s));
+                            for (String s : redTeam.getEntries()) {
+                                Player p = Objects.requireNonNull(Bukkit.getPlayer(s));
 
-                            Set<Location> arraySet = team2Locs.keySet();
-                            Location loc = (Location) arraySet.toArray()[new Random().nextInt(arraySet.size())];
+                                Set<Location> arraySet = team2Locs.keySet();
+                                Location loc = (Location) arraySet.toArray()[new Random().nextInt(arraySet.size())];
 
-                            p.teleport(loc);
-                            p.sendMessage(ChatColor.RED + "Teleporting to " + ChatColor.BOLD + team2Locs.get(loc) + "!");
-                        }
-                        for (String s : blueTeam.getEntries()) {
-                            Player p = Objects.requireNonNull(Bukkit.getPlayer(s));
+                                p.teleport(loc);
+                                p.sendMessage(ChatColor.RED + "Teleporting to " + ChatColor.BOLD + team2Locs.get(loc) + "!");
+                            }
+                            for (String s : blueTeam.getEntries()) {
+                                Player p = Objects.requireNonNull(Bukkit.getPlayer(s));
 
-                            Set<Location> arraySet = team1Locs.keySet();
-                            Location loc = (Location) arraySet.toArray()[new Random().nextInt(arraySet.size())];
+                                Set<Location> arraySet = team1Locs.keySet();
+                                Location loc = (Location) arraySet.toArray()[new Random().nextInt(arraySet.size())];
 
-                            p.teleport(loc);
-                            p.sendMessage(ChatColor.RED + "Teleporting to " + ChatColor.BOLD + team1Locs.get(loc) + "!");
+                                p.teleport(loc);
+                                p.sendMessage(ChatColor.RED + "Teleporting to " + ChatColor.BOLD + team1Locs.get(loc) + "!");
+                            }
                         }
                     }
                 });
@@ -107,11 +112,9 @@ public class Main {
             bar.addPlayer(p);
         }
     }
-
     public void endGame(team.Teams winner) {
         swapTask.cancel();
         state = States.POSTGAME;
         new Post().start(winner);
     }
-
 }
