@@ -65,12 +65,12 @@ public final class DeathSwap extends JavaPlugin {
         getLogger().info("Deleting overworld...");
         gm.GameWorld.deleteWorld("deathswap-1");
         gm.GameWorld.deleteWorld("deathswap-2");
-        if (!config.getBoolean("server.changeproperties.nether")) {
+        if (!config.getBoolean("game.world.nether")) {
             getLogger().info("Deleting nether...");
             gm.GameWorld.deleteWorld("deathswap-1-nether");
             gm.GameWorld.deleteWorld("deathswap-2-nether");
         }
-        if (!config.getBoolean("server.changeproperties.end")) {
+        if (!config.getBoolean("game.world.end")) {
             getLogger().info("Deleting end...");
             gm.GameWorld.deleteWorld("deathswap-1-end");
             gm.GameWorld.deleteWorld("deathswap-2-end");
