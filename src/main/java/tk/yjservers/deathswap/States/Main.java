@@ -79,19 +79,19 @@ public class Main {
         }
 
         if (redEmpty) {
-            Bukkit.getLogger().info("Attempting to start a swap, but " + ChatColor.RED + "red" + ChatColor.RESET + " team has no players...");
+            Bukkit.getLogger().info("Attempting to start a swap, but red team has no players...");
             return;
         }
         if (blueEmpty) {
-            Bukkit.getLogger().info("Attempting to start a swap, but " + ChatColor.BLUE + "blue" + ChatColor.RESET + " team has no players...");
+            Bukkit.getLogger().info("Attempting to start a swap, but blue team has no players...");
             return;
         }
         if (redTeam.getSize() == 0) {
-            Bukkit.getLogger().info("Attempting to start a swap, but " + ChatColor.RED + "red" + ChatColor.RESET + " team has no players...");
+            Bukkit.getLogger().info("Attempting to start a swap, but red team has no players...");
             return;
         }
         if (blueTeam.getSize() == 0) {
-            Bukkit.getLogger().info("Attempting to start a swap, but " + ChatColor.BLUE + "blue" + ChatColor.RESET + " team has no players...");
+            Bukkit.getLogger().info("Attempting to start a swap, but blue team has no players...");
             return;
         }
         gm.GamePlayer.playSoundToAll(Sound.ENTITY_WITHER_SPAWN);
