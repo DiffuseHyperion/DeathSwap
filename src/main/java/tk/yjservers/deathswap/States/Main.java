@@ -61,6 +61,31 @@ public class Main {
     }
 
     public void swapPlayers() {
+        boolean redEmpty = true;
+        for (String s : redTeam.getEntries()) {
+            if (!Objects.isNull(Bukkit.getPlayer(s))) {
+                // at least 1 person is online in red
+                redEmpty = false;
+                break;
+            }
+        }
+        boolean blueEmpty = true;
+        for (String s : blueTeam.getEntries()) {
+            if (!Objects.isNull(Bukkit.getPlayer(s))) {
+                // at least 1 person is online in blue
+                blueEmpty = false;
+                break;
+            }
+        }
+
+        if (redEmpty) {
+            Bukkit.getLogger().info("Attempting to start a swap, but " + ChatColor.RED + "red" + ChatColor.RESET + " team has no players...");
+            return;
+        }
+        if (blueEmpty) {
+            Bukkit.getLogger().info("Attempting to start a swap, but " + ChatColor.BLUE + "blue" + ChatColor.RESET + " team has no players...");
+            return;
+        }
         if (redTeam.getSize() == 0) {
             Bukkit.getLogger().info("Attempting to start a swap, but " + ChatColor.RED + "red" + ChatColor.RESET + " team has no players...");
             return;
