@@ -16,7 +16,6 @@ import tk.yjservers.deathswap.Listener.onPlayerJoin;
 import tk.yjservers.deathswap.Listener.onPlayerLeave;
 import tk.yjservers.gamemaster.GameMaster;
 import tk.yjservers.gamemaster.GameServer;
-import tk.yjservers.gamemaster.GameWorld;
 
 import java.io.IOException;
 import java.util.Objects;
@@ -178,13 +177,36 @@ public final class DeathSwap extends JavaPlugin {
         getLogger().info("Using seed " + seed + " for deathswap worlds!");
         getLogger().info("Creating deathswap worlds, this may take a while...");
         getLogger().info("Creating overworld worlds...");
-        ds1 = gm.GameWorld.createWorld("deathswap-1", seed, World.Environment.NORMAL, WorldType.getByName(Objects.requireNonNull(config.getString("game.world.overworld.type"))));
-        ds2 = gm.GameWorld.createWorld("deathswap-2", seed, World.Environment.NORMAL, WorldType.getByName(Objects.requireNonNull(config.getString("game.world.overworld.type"))));
+
+        WorldType type = WorldType.getByName(Objects.requireNonNull(config.getString("game.world.overworld.type")));
+        // whenever i do WorldType.getByName(), i get "Cannot invoke "org.bukkit.WorldType.name()" because the return value of "org.bukkit.WorldCreator.type()" is null"
+        switch (Objects.requireNonNull(config.getString("game.world.overworld.type"))) {
+            case "NORMAL":
+                type = WorldType.NORMAL;
+                getLogger().info("World type: NORMAL");
+                break;
+            case "LARGE_BIOMES":
+                type = WorldType.LARGE_BIOMES;
+                getLogger().info("World type: LARGE_BIOMES");
+                break;
+            case "AMPLIFIED":
+                type = WorldType.AMPLIFIED;
+                getLogger().info("World type: AMPLIFIED");
+                break;
+            case "FLAT":
+                type = WorldType.FLAT;
+                getLogger().info("World type: FLAT");
+                break;
+        }
+        ds1 = gm.GameWorld.createWorld("deathswap-1", seed, World.Environment.NORMAL, type);
+        ds2 = gm.GameWorld.createWorld("deathswap-2", seed, World.Environment.NORMAL, type);
+
         if (config.getBoolean("game.world.nether")) {
             getLogger().info("Creating nether worlds...");
             gm.GameWorld.createWorld("deathswap-1-nether", seed, World.Environment.NETHER, WorldType.NORMAL);
             gm.GameWorld.createWorld("deathswap-2-nether", seed, World.Environment.NETHER, WorldType.NORMAL);
         }
+
         if (config.getBoolean("game.world.end")) {
             getLogger().info("Creating end worlds...");
             gm.GameWorld.createWorld("deathswap-1-end", seed, World.Environment.THE_END, WorldType.NORMAL);
