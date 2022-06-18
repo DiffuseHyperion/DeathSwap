@@ -147,8 +147,8 @@ public final class DeathSwap extends JavaPlugin {
 
         try {
             if (gm.GameServer.checkForServerProperties(config.getBoolean("server.changeproperties.protection"),
-                    config.getBoolean("server.changeproperties.nether"),
-                    config.getBoolean("server.changeproperties.end"),
+                    !config.getBoolean("game.world.nether"),
+                    !config.getBoolean("game.world.end"),
                     config.getBoolean("server.changeproperties.anticheat"))) {
                 getLogger().info("Detected that at least one of the following: Nether, end, spawn protection and minecraft's anticheat wasn't disabled!");
                 getLogger().info("The appropriate files has been edited. Restarting server for changes to take effect.");
@@ -168,18 +168,24 @@ public final class DeathSwap extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new onPlayerLeave(), this);
 
         getLogger().info("Creating deathswap and lobby worlds...");
-        Long seed = new Random().nextLong();
+        Long seed;
+        if (config.isSet("game.world.seed")) {
+            getLogger().info("Detected that a seed was set in config.yml!");
+            seed = config.getLong("game.world.seed");
+        } else {
+            seed = new Random().nextLong();
+        }
         getLogger().info("Using seed " + seed + " for deathswap worlds!");
         getLogger().info("Creating deathswap worlds, this may take a while...");
         getLogger().info("Creating overworld worlds...");
-        ds1 = gm.GameWorld.createWorld("deathswap-1", seed);
-        ds2 = gm.GameWorld.createWorld("deathswap-2", seed);
-        if (!config.getBoolean("server.changeproperties.nether")) {
+        ds1 = gm.GameWorld.createWorld("deathswap-1", seed, World.Environment.NORMAL, WorldType.getByName(Objects.requireNonNull(config.getString("game.world.overworld.type"))));
+        ds2 = gm.GameWorld.createWorld("deathswap-2", seed, World.Environment.NORMAL, WorldType.getByName(Objects.requireNonNull(config.getString("game.world.overworld.type"))));
+        if (config.getBoolean("game.world.nether")) {
             getLogger().info("Creating nether worlds...");
             gm.GameWorld.createWorld("deathswap-1-nether", seed, World.Environment.NETHER, WorldType.NORMAL);
             gm.GameWorld.createWorld("deathswap-2-nether", seed, World.Environment.NETHER, WorldType.NORMAL);
         }
-        if (!config.getBoolean("server.changeproperties.end")) {
+        if (config.getBoolean("game.world.end")) {
             getLogger().info("Creating end worlds...");
             gm.GameWorld.createWorld("deathswap-1-end", seed, World.Environment.THE_END, WorldType.NORMAL);
             gm.GameWorld.createWorld("deathswap-2-end", seed, World.Environment.THE_END, WorldType.NORMAL);

@@ -1,5 +1,20 @@
 # Config related to gameplay.
 game:
+  # Config related to world generation.
+  world:
+    # The seed to use for world generation. This cannot contain letters. Leave blank to use a random seed.
+    seed:
+    # Config related to overworld world generation.
+    overworld:
+      # The world type to use. Accepted values: NORMAL, LARGE_BIOMES, AMPLIFIED, FLAT
+      type: NORMAL
+    # Whether to generate the nether.
+    # If set to false, the plugin will also disable them in server.properties.
+    nether: true
+    # Whether to generate the end.
+    # If set to false, the plugin will also disable them in bukkit.yml.
+    # Note that most games will never reach this point.
+    end: true
   # Config related to swapping.
   swap:
     # How long to show the started game timer for. Unit is seconds.
@@ -36,13 +51,6 @@ server:
     os:
   # Changes some properties in your server for optimization/balancing.
   changeproperties:
-    # Whether to disable the nether.
-    # Set this to true to prevent players from going to the nether, and save some server resources.
-    nether: false
-    # Whether to disable the end.
-    # Set this to true to prevent players from going to the end, and save some server resources.
-    # Consider that most games will never reach this point.
-    end: false
     # Whether to disable spawn protection.
     # Set this to true to stop minecraft from blocking placement and destruction of blocks at 0, 0.
     protection: true
