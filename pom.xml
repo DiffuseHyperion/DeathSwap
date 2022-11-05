@@ -6,7 +6,7 @@
 
     <groupId>tk.yjservers</groupId>
     <artifactId>DeathSwap</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.0-1.13</version>
     <packaging>jar</packaging>
 
     <name>DeathSwap</name>
@@ -67,13 +67,13 @@
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot-api</artifactId>
-            <version>1.19-R0.1-SNAPSHOT</version>
+            <version>1.13.2-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>tk.yjservers</groupId>
+            <groupId>tk.diffusehyperion</groupId>
             <artifactId>GameMaster</artifactId>
-            <version>1.0.0</version>
+            <version>1.0.0-1.13</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>

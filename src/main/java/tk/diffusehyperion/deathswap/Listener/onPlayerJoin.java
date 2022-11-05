@@ -1,4 +1,4 @@
-package tk.yjservers.deathswap.Listener;
+package tk.diffusehyperion.deathswap.Listener;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -10,12 +10,10 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.javatuples.Pair;
+import tk.diffusehyperion.deathswap.Commands.team;
 
-import static tk.yjservers.deathswap.Commands.team.redTeam;
-import static tk.yjservers.deathswap.Commands.team.blueTeam;
-import static tk.yjservers.deathswap.DeathSwap.lobby;
-import static tk.yjservers.deathswap.DeathSwap.state;
-import static tk.yjservers.deathswap.Listener.onPlayerLeave.dcPlayers;
+import static tk.diffusehyperion.deathswap.DeathSwap.lobby;
+import static tk.diffusehyperion.deathswap.DeathSwap.state;
 
 public class onPlayerJoin implements Listener {
 
@@ -34,11 +32,11 @@ public class onPlayerJoin implements Listener {
                 p.sendMessage(ChatColor.YELLOW + "Welcome to DeathSwap! Use /team red or /team blue to choose a team!");
                 break;
             case MAIN:
-                if (!(redTeam.hasEntry(pname) || blueTeam.hasEntry(pname))) {
+                if (!(team.redTeam.hasEntry(pname) || team.blueTeam.hasEntry(pname))) {
                     e.getPlayer().setGameMode(GameMode.SPECTATOR);
                     e.getPlayer().sendMessage(ChatColor.GRAY + "The game has already started. Use spectator's mode teleport to see players.");
                 } else {
-                    Pair<BossBar, BukkitRunnable> pair = dcPlayers.get(pname);
+                    Pair<BossBar, BukkitRunnable> pair = onPlayerLeave.dcPlayers.get(pname);
                     pair.getValue0().removeAll();
                     pair.getValue1().cancel();
                 }

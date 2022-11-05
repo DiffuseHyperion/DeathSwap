@@ -1,7 +1,7 @@
 name: DeathSwap
 version: '${project.version}'
-main: tk.yjservers.deathswap.DeathSwap
-api-version: 1.19
+main: tk.diffusehyperion.deathswap.DeathSwap
+api-version: 1.13
 description: only 2 years late
 depend:
   - GameMaster

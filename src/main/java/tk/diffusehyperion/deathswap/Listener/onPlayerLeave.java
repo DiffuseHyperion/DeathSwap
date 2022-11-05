@@ -1,4 +1,4 @@
-package tk.yjservers.deathswap.Listener;
+package tk.diffusehyperion.deathswap.Listener;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -11,16 +11,16 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.javatuples.Pair;
-import tk.yjservers.deathswap.Commands.team;
-import tk.yjservers.deathswap.DeathSwap;
-import tk.yjservers.deathswap.States.Main;
-import tk.yjservers.gamemaster.GamePlayer;
+import tk.diffusehyperion.deathswap.Commands.team;
+import tk.diffusehyperion.deathswap.DeathSwap;
+import tk.diffusehyperion.deathswap.States.Main;
+import tk.diffusehyperion.gamemaster.GamePlayer;
 
 import java.util.HashMap;
 
-import static tk.yjservers.deathswap.Commands.team.redTeam;
-import static tk.yjservers.deathswap.Commands.team.blueTeam;
-import static tk.yjservers.deathswap.DeathSwap.*;
+import static tk.diffusehyperion.deathswap.Commands.team.redTeam;
+import static tk.diffusehyperion.deathswap.Commands.team.blueTeam;
+import static tk.diffusehyperion.deathswap.DeathSwap.*;
 
 public class onPlayerLeave implements Listener {
 
@@ -32,7 +32,7 @@ public class onPlayerLeave implements Listener {
             Player p = e.getPlayer();
             String pname = p.getDisplayName();
             if (redTeam.hasEntry(pname) || blueTeam.hasEntry(pname)) {
-                Pair<BossBar, BukkitRunnable> pair = gm.GamePlayer.timerWithTask(config.getInt("game.reconnect.grace"),
+                Pair<BossBar, BukkitRunnable> pair = gm.GamePlayer.timer(config.getInt("game.reconnect.grace"),
                         pname + " has disconnected! He will be kicked from the game in " + GamePlayer.timerReplacement.TIME_LEFT + " seconds!",
                         BarColor.WHITE, BarStyle.SEGMENTED_10, new BukkitRunnable() {
                             @Override

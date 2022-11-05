@@ -1,4 +1,4 @@
-package tk.yjservers.deathswap;
+package tk.diffusehyperion.deathswap;
 
 import org.bukkit.Bukkit;
 import org.bukkit.World;
@@ -7,15 +7,15 @@ import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
-import tk.yjservers.deathswap.Commands.reloadconfig;
-import tk.yjservers.deathswap.Commands.start;
-import tk.yjservers.deathswap.Commands.swap;
-import tk.yjservers.deathswap.Commands.team;
-import tk.yjservers.deathswap.Listener.onPlayerDeath;
-import tk.yjservers.deathswap.Listener.onPlayerJoin;
-import tk.yjservers.deathswap.Listener.onPlayerLeave;
-import tk.yjservers.gamemaster.GameMaster;
-import tk.yjservers.gamemaster.GameServer;
+import tk.diffusehyperion.deathswap.Commands.reloadconfig;
+import tk.diffusehyperion.deathswap.Commands.start;
+import tk.diffusehyperion.deathswap.Commands.swap;
+import tk.diffusehyperion.deathswap.Commands.team;
+import tk.diffusehyperion.deathswap.Listener.onPlayerDeath;
+import tk.diffusehyperion.deathswap.Listener.onPlayerJoin;
+import tk.diffusehyperion.deathswap.Listener.onPlayerLeave;
+import tk.diffusehyperion.gamemaster.GameMaster;
+import tk.diffusehyperion.gamemaster.GameServer;
 
 import java.io.IOException;
 import java.util.Objects;

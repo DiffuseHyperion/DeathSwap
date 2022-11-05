@@ -1,4 +1,4 @@
-package tk.yjservers.deathswap.States;
+package tk.diffusehyperion.deathswap.States;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -9,17 +9,16 @@ import org.bukkit.boss.BarStyle;
 import org.bukkit.boss.BossBar;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
-import tk.yjservers.deathswap.Commands.team;
-import tk.yjservers.gamemaster.GamePlayer;
+import tk.diffusehyperion.deathswap.Commands.team;
+import tk.diffusehyperion.gamemaster.GamePlayer;
 
-import static tk.yjservers.deathswap.DeathSwap.config;
-import static tk.yjservers.deathswap.DeathSwap.gm;
-import static tk.yjservers.deathswap.States.Main.swapTask;
+import static tk.diffusehyperion.deathswap.DeathSwap.config;
+import static tk.diffusehyperion.deathswap.DeathSwap.gm;
 
 public class Post {
     public void start(team.Teams winner) {
         gm.GamePlayer.playSoundToAll(Sound.UI_TOAST_CHALLENGE_COMPLETE);
-        swapTask.cancel();
+        Main.swapTask.cancel();
         if (winner.equals(team.Teams.redTeam)) {
             for (Player p : Bukkit.getOnlinePlayers()) {
                 p.sendTitle(ChatColor.RED + "Red" + ChatColor.YELLOW + " has won the game!", ChatColor.YELLOW + "Congratulations!", 10, 70, 20);
@@ -36,7 +35,7 @@ public class Post {
             public void run() {
                 gm.GameServer.restart();
             }
-        });
+        }).getValue0();
         for (Player p : Bukkit.getOnlinePlayers()) {
             bar.addPlayer(p);
             p.setGameMode(GameMode.SPECTATOR);

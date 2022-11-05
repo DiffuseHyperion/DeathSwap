@@ -1,4 +1,4 @@
-package tk.yjservers.deathswap.Commands;
+package tk.diffusehyperion.deathswap.Commands;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -8,11 +8,11 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.Team;
-import tk.yjservers.deathswap.DeathSwap;
+import tk.diffusehyperion.deathswap.DeathSwap;
 
 import java.util.Objects;
 
-import static tk.yjservers.deathswap.DeathSwap.state;
+import static tk.diffusehyperion.deathswap.DeathSwap.state;
 
 public class team implements CommandExecutor {
 

@@ -1,4 +1,4 @@
-package tk.yjservers.deathswap.States;
+package tk.diffusehyperion.deathswap.States;
 
 import org.bukkit.*;
 import org.bukkit.boss.BarColor;
@@ -6,31 +6,29 @@ import org.bukkit.boss.BarStyle;
 import org.bukkit.boss.BossBar;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
-import tk.yjservers.deathswap.Commands.team;
-import tk.yjservers.gamemaster.GamePlayer;
+import tk.diffusehyperion.deathswap.Commands.team;
+import tk.diffusehyperion.gamemaster.GamePlayer;
 
 import java.util.*;
 
-import static tk.yjservers.deathswap.Commands.team.redTeam;
-import static tk.yjservers.deathswap.Commands.team.blueTeam;
-import static tk.yjservers.deathswap.DeathSwap.*;
+import static tk.diffusehyperion.deathswap.DeathSwap.*;
 
 public class Main {
 
     public static BukkitRunnable swapTask;
 
     public void start() {
-        for (String s : redTeam.getEntries()) {
+        for (String s : team.redTeam.getEntries()) {
             Objects.requireNonNull(Bukkit.getPlayer(s)).teleport(ds1.getSpawnLocation().add(0.5, 0, 0.5));
         }
-        for (String s : blueTeam.getEntries()) {
+        for (String s : team.blueTeam.getEntries()) {
             Objects.requireNonNull(Bukkit.getPlayer(s)).teleport(ds2.getSpawnLocation().add(0.5, 0, 0.5));
         }
         int swapMin = config.getInt("game.swap.swaptimer.min");
         int swapMax = config.getInt("game.swap.swaptimer.max");
         BossBar bar = gm.GamePlayer.timer(config.getInt("game.swap.starttimer"),
                 "Game has started! Swaps happen every " + swapMin + " - " + swapMax + " seconds.",
-                BarColor.YELLOW, BarStyle.SOLID);
+                BarColor.YELLOW, BarStyle.SOLID).getValue0();
         for (Player p : Bukkit.getOnlinePlayers()) {
             bar.addPlayer(p);
             p.setHealth(20);
@@ -62,7 +60,7 @@ public class Main {
 
     public void swapPlayers() {
         boolean redEmpty = true;
-        for (String s : redTeam.getEntries()) {
+        for (String s : team.redTeam.getEntries()) {
             if (!Objects.isNull(Bukkit.getPlayer(s))) {
                 // at least 1 person is online in red
                 redEmpty = false;
@@ -70,7 +68,7 @@ public class Main {
             }
         }
         boolean blueEmpty = true;
-        for (String s : blueTeam.getEntries()) {
+        for (String s : team.blueTeam.getEntries()) {
             if (!Objects.isNull(Bukkit.getPlayer(s))) {
                 // at least 1 person is online in blue
                 blueEmpty = false;
@@ -86,11 +84,11 @@ public class Main {
             Bukkit.getLogger().info("Attempting to start a swap, but blue team has no players...");
             return;
         }
-        if (redTeam.getSize() == 0) {
+        if (team.redTeam.getSize() == 0) {
             Bukkit.getLogger().info("Attempting to start a swap, but red team has no players...");
             return;
         }
-        if (blueTeam.getSize() == 0) {
+        if (team.blueTeam.getSize() == 0) {
             Bukkit.getLogger().info("Attempting to start a swap, but blue team has no players...");
             return;
         }
@@ -104,14 +102,14 @@ public class Main {
                         if (state == States.MAIN) {
                             HashMap<Location, String> team1Locs = new HashMap<>();
                             HashMap<Location, String> team2Locs = new HashMap<>();
-                            for (String s : redTeam.getEntries()) {
+                            for (String s : team.redTeam.getEntries()) {
                                 team1Locs.put(Objects.requireNonNull(Bukkit.getPlayer(s)).getLocation(), s);
                             }
-                            for (String s : blueTeam.getEntries()) {
+                            for (String s : team.blueTeam.getEntries()) {
                                 team2Locs.put(Objects.requireNonNull(Bukkit.getPlayer(s)).getLocation(), s);
                             }
 
-                            for (String s : redTeam.getEntries()) {
+                            for (String s : team.redTeam.getEntries()) {
                                 Player p = Objects.requireNonNull(Bukkit.getPlayer(s));
 
                                 Set<Location> arraySet = team2Locs.keySet();
@@ -120,7 +118,7 @@ public class Main {
                                 p.teleport(loc);
                                 p.sendMessage(ChatColor.RED + "Teleporting to " + ChatColor.BOLD + team2Locs.get(loc) + "!");
                             }
-                            for (String s : blueTeam.getEntries()) {
+                            for (String s : team.blueTeam.getEntries()) {
                                 Player p = Objects.requireNonNull(Bukkit.getPlayer(s));
 
                                 Set<Location> arraySet = team1Locs.keySet();
@@ -131,7 +129,7 @@ public class Main {
                             }
                         }
                     }
-                });
+                }).getValue0();
         Bukkit.broadcastMessage(ChatColor.YELLOW + "A swap is happening in " + ChatColor.BOLD + time + " seconds!");
         for (Player p : Bukkit.getOnlinePlayers()) {
             bar.addPlayer(p);

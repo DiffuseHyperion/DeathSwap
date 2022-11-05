@@ -1,4 +1,4 @@
-package tk.yjservers.deathswap.Commands;
+package tk.diffusehyperion.deathswap.Commands;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -7,16 +7,14 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import tk.yjservers.deathswap.DeathSwap;
-import tk.yjservers.deathswap.States.Main;
+import tk.diffusehyperion.deathswap.DeathSwap;
+import tk.diffusehyperion.deathswap.States.Main;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static tk.yjservers.deathswap.Commands.team.redTeam;
-import static tk.yjservers.deathswap.Commands.team.blueTeam;
-import static tk.yjservers.deathswap.DeathSwap.gm;
-import static tk.yjservers.deathswap.DeathSwap.state;
+import static tk.diffusehyperion.deathswap.DeathSwap.gm;
+import static tk.diffusehyperion.deathswap.DeathSwap.state;
 
 public class start implements CommandExecutor {
     @Override
@@ -25,18 +23,18 @@ public class start implements CommandExecutor {
             sender.sendMessage(ChatColor.RED + "The game has already started!");
             return true;
         }
-        if (redTeam.getSize() < 1) {
+        if (team.redTeam.getSize() < 1) {
             sender.sendMessage(ChatColor.RED + "Red team has no players...");
             return true;
         }
-        if (blueTeam.getSize() < 1) {
+        if (team.blueTeam.getSize() < 1) {
             sender.sendMessage(ChatColor.RED + "Blue team has no players...");
             return true;
         }
         List<String> notReady = new ArrayList<>();
         for (Player p : Bukkit.getOnlinePlayers()) {
             String pname = p.getDisplayName();
-            if (!(redTeam.hasEntry(pname) || blueTeam.hasEntry(pname))) {
+            if (!(team.redTeam.hasEntry(pname) || team.blueTeam.hasEntry(pname))) {
                 notReady.add(pname);
             }
         }
