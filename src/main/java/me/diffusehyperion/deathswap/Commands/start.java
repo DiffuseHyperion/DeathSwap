@@ -1,4 +1,4 @@
-package tk.diffusehyperion.deathswap.Commands;
+package me.diffusehyperion.deathswap.Commands;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -7,14 +7,15 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import tk.diffusehyperion.deathswap.DeathSwap;
-import tk.diffusehyperion.deathswap.States.Main;
+import me.diffusehyperion.deathswap.DeathSwap;
+import me.diffusehyperion.deathswap.States.Main;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static tk.diffusehyperion.deathswap.DeathSwap.gm;
-import static tk.diffusehyperion.deathswap.DeathSwap.state;
+import static me.diffusehyperion.deathswap.DeathSwap.state;
+
+import me.diffusehyperion.gamemaster.Components.GamePlayer;
 
 public class start implements CommandExecutor {
     @Override
@@ -46,7 +47,7 @@ public class start implements CommandExecutor {
             return true;
         }
         state = DeathSwap.States.MAIN;
-        gm.GamePlayer.playSoundToAll(Sound.ENTITY_WITHER_DEATH);
+        GamePlayer.playSoundToAll(Sound.ENTITY_WITHER_DEATH);
         new Main().start();
         return true;
     }

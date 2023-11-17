@@ -4,9 +4,9 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>tk.yjservers</groupId>
+    <groupId>me.diffusehyperion</groupId>
     <artifactId>DeathSwap</artifactId>
-    <version>1.0.0-1.13</version>
+    <version>1.0.1-1.13</version>
     <packaging>jar</packaging>
 
     <name>DeathSwap</name>
@@ -62,11 +62,8 @@
             <id>sonatype</id>
             <url>https://oss.sonatype.org/content/groups/public/</url>
         </repository>
-        <repository>
-            <id>GameMaster-repo</id>
-            <url>https://diffusehyperion.blob.core.windows.net/releases</url>
-        </repository>
     </repositories>
+
     <dependencies>
         <dependency>
             <groupId>org.spigotmc</groupId>
@@ -75,10 +72,9 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>tk.diffusehyperion</groupId>
-            <artifactId>GameMaster</artifactId>
-            <version>1.0.1-1.13</version>
-            <scope>provided</scope>
+            <groupId>me.diffusehyperion</groupId>
+            <artifactId>gamemaster</artifactId>
+            <version>1.0.3.1-rc2-1.13</version>
         </dependency>
     </dependencies>
 </project>

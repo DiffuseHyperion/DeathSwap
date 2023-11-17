@@ -1,4 +1,4 @@
-package tk.diffusehyperion.deathswap.Listener;
+package me.diffusehyperion.deathswap.Listener;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -9,11 +9,12 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.scheduler.BukkitRunnable;
-import org.javatuples.Pair;
-import tk.diffusehyperion.deathswap.Commands.team;
+import me.diffusehyperion.deathswap.Commands.team;
 
-import static tk.diffusehyperion.deathswap.DeathSwap.lobby;
-import static tk.diffusehyperion.deathswap.DeathSwap.state;
+import static me.diffusehyperion.deathswap.DeathSwap.lobby;
+import static me.diffusehyperion.deathswap.DeathSwap.state;
+
+import me.diffusehyperion.gamemaster.Utility.Pair;
 
 public class onPlayerJoin implements Listener {
 

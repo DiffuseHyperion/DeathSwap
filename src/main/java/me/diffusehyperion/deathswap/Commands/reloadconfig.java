@@ -1,11 +1,11 @@
-package tk.diffusehyperion.deathswap.Commands;
+package me.diffusehyperion.deathswap.Commands;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 
-import static tk.diffusehyperion.deathswap.DeathSwap.config;
-import static tk.diffusehyperion.deathswap.DeathSwap.plugin;
+import static me.diffusehyperion.deathswap.DeathSwap.config;
+import static me.diffusehyperion.deathswap.DeathSwap.plugin;
 
 public class reloadconfig implements CommandExecutor {
     @Override

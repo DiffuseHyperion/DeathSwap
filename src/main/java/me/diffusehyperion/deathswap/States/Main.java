@@ -1,4 +1,4 @@
-package tk.diffusehyperion.deathswap.States;
+package me.diffusehyperion.deathswap.States;
 
 import org.bukkit.*;
 import org.bukkit.boss.BarColor;
@@ -6,12 +6,13 @@ import org.bukkit.boss.BarStyle;
 import org.bukkit.boss.BossBar;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
-import tk.diffusehyperion.deathswap.Commands.team;
-import tk.diffusehyperion.gamemaster.GamePlayer;
+import me.diffusehyperion.deathswap.Commands.team;
 
 import java.util.*;
 
-import static tk.diffusehyperion.deathswap.DeathSwap.*;
+import static me.diffusehyperion.deathswap.DeathSwap.*;
+
+import me.diffusehyperion.gamemaster.Components.GamePlayer;
 
 public class Main {
 
@@ -26,7 +27,7 @@ public class Main {
         }
         int swapMin = config.getInt("game.swap.swaptimer.min");
         int swapMax = config.getInt("game.swap.swaptimer.max");
-        BossBar bar = gm.GamePlayer.timer(config.getInt("game.swap.starttimer"),
+        BossBar bar = GamePlayer.timer(config.getInt("game.swap.starttimer"),
                 "Game has started! Swaps happen every " + swapMin + " - " + swapMax + " seconds.",
                 BarColor.YELLOW, BarStyle.SOLID).getValue0();
         for (Player p : Bukkit.getOnlinePlayers()) {
@@ -55,7 +56,7 @@ public class Main {
         };
         swapTask.runTaskTimer(plugin, 0, 20);
 
-        gm.GamePlayer.playSoundToAll(Sound.ENTITY_ENDER_DRAGON_GROWL);
+        GamePlayer.playSoundToAll(Sound.ENTITY_ENDER_DRAGON_GROWL);
     }
 
     public void swapPlayers() {
@@ -92,9 +93,9 @@ public class Main {
             Bukkit.getLogger().info("Attempting to start a swap, but blue team has no players...");
             return;
         }
-        gm.GamePlayer.playSoundToAll(Sound.ENTITY_WITHER_SPAWN);
+        GamePlayer.playSoundToAll(Sound.ENTITY_WITHER_SPAWN);
         int time = config.getInt("game.swap.time");
-        BossBar bar = gm.GamePlayer.timer(time,
+        BossBar bar = GamePlayer.timer(time,
                 "A swap is happening in " + GamePlayer.timerReplacement.TIME_LEFT + " seconds!",
                 BarColor.RED, BarStyle.SOLID, new BukkitRunnable() {
                     @Override

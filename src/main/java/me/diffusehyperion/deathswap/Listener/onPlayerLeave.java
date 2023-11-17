@@ -1,4 +1,4 @@
-package tk.diffusehyperion.deathswap.Listener;
+package me.diffusehyperion.deathswap.Listener;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -10,17 +10,17 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.scheduler.BukkitRunnable;
-import org.javatuples.Pair;
-import tk.diffusehyperion.deathswap.Commands.team;
-import tk.diffusehyperion.deathswap.DeathSwap;
-import tk.diffusehyperion.deathswap.States.Main;
-import tk.diffusehyperion.gamemaster.GamePlayer;
+import me.diffusehyperion.deathswap.Commands.team;
+import me.diffusehyperion.deathswap.DeathSwap;
+import me.diffusehyperion.deathswap.States.Main;
+import me.diffusehyperion.gamemaster.Components.GamePlayer;
+import me.diffusehyperion.gamemaster.Utility.Pair;
 
 import java.util.HashMap;
 
-import static tk.diffusehyperion.deathswap.Commands.team.redTeam;
-import static tk.diffusehyperion.deathswap.Commands.team.blueTeam;
-import static tk.diffusehyperion.deathswap.DeathSwap.*;
+import static me.diffusehyperion.deathswap.Commands.team.redTeam;
+import static me.diffusehyperion.deathswap.Commands.team.blueTeam;
+import static me.diffusehyperion.deathswap.DeathSwap.*;
 
 public class onPlayerLeave implements Listener {
 
@@ -32,7 +32,7 @@ public class onPlayerLeave implements Listener {
             Player p = e.getPlayer();
             String pname = p.getDisplayName();
             if (redTeam.hasEntry(pname) || blueTeam.hasEntry(pname)) {
-                Pair<BossBar, BukkitRunnable> pair = gm.GamePlayer.timer(config.getInt("game.reconnect.grace"),
+                Pair<BossBar, BukkitRunnable> pair = GamePlayer.timer(config.getInt("game.reconnect.grace"),
                         pname + " has disconnected! He will be kicked from the game in " + GamePlayer.timerReplacement.TIME_LEFT + " seconds!",
                         BarColor.WHITE, BarStyle.SEGMENTED_10, new BukkitRunnable() {
                             @Override

@@ -1,4 +1,4 @@
-package tk.diffusehyperion.deathswap.Listener;
+package me.diffusehyperion.deathswap.Listener;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -8,12 +8,13 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
-import tk.diffusehyperion.deathswap.Commands.team;
-import tk.diffusehyperion.deathswap.DeathSwap;
-import tk.diffusehyperion.deathswap.States.Main;
+import me.diffusehyperion.deathswap.Commands.team;
+import me.diffusehyperion.deathswap.DeathSwap;
+import me.diffusehyperion.deathswap.States.Main;
 
-import static tk.diffusehyperion.deathswap.DeathSwap.gm;
-import static tk.diffusehyperion.deathswap.DeathSwap.state;
+import static me.diffusehyperion.deathswap.DeathSwap.state;
+
+import me.diffusehyperion.gamemaster.Components.GamePlayer;
 
 public class onPlayerDeath implements Listener {
 
@@ -39,7 +40,7 @@ public class onPlayerDeath implements Listener {
                 }
             }
 
-            gm.GamePlayer.playSoundToAll(Sound.ENTITY_WITHER_DEATH);
+            GamePlayer.playSoundToAll(Sound.ENTITY_WITHER_DEATH);
             p.sendMessage(ChatColor.GRAY + "You have died! Use spectator's mode teleport to see players.");
         }
     }

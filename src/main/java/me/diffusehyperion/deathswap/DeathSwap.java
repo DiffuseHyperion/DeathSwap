@@ -1,4 +1,4 @@
-package tk.diffusehyperion.deathswap;
+package me.diffusehyperion.deathswap;
 
 import org.bukkit.Bukkit;
 import org.bukkit.World;
@@ -7,15 +7,16 @@ import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
-import tk.diffusehyperion.deathswap.Commands.reloadconfig;
-import tk.diffusehyperion.deathswap.Commands.start;
-import tk.diffusehyperion.deathswap.Commands.swap;
-import tk.diffusehyperion.deathswap.Commands.team;
-import tk.diffusehyperion.deathswap.Listener.onPlayerDeath;
-import tk.diffusehyperion.deathswap.Listener.onPlayerJoin;
-import tk.diffusehyperion.deathswap.Listener.onPlayerLeave;
-import tk.diffusehyperion.gamemaster.GameMaster;
-import tk.diffusehyperion.gamemaster.GameServer;
+import me.diffusehyperion.deathswap.Commands.reloadconfig;
+import me.diffusehyperion.deathswap.Commands.start;
+import me.diffusehyperion.deathswap.Commands.swap;
+import me.diffusehyperion.deathswap.Commands.team;
+import me.diffusehyperion.deathswap.Listener.onPlayerDeath;
+import me.diffusehyperion.deathswap.Listener.onPlayerJoin;
+import me.diffusehyperion.deathswap.Listener.onPlayerLeave;
+
+import me.diffusehyperion.gamemaster.Components.GameWorld;
+import me.diffusehyperion.gamemaster.Components.GameServer;
 
 import java.io.IOException;
 import java.util.Objects;
@@ -29,8 +30,6 @@ public final class DeathSwap extends JavaPlugin {
     public static World ds2;
     public static FileConfiguration config;
     public static Plugin plugin;
-
-    public static GameMaster gm;
     public enum States {
         PREGAME,
         MAIN,
@@ -38,9 +37,6 @@ public final class DeathSwap extends JavaPlugin {
     }
     @Override
     public void onEnable() {
-        gm = (GameMaster) getServer().getPluginManager().getPlugin("GameMaster");
-        assert gm != null;
-
         getLogger().info("Getting configuration...");
         this.saveDefaultConfig();
         this.getConfig().options().copyDefaults(true);
@@ -51,7 +47,7 @@ public final class DeathSwap extends JavaPlugin {
 
         String levelname;
         try {
-            levelname = new GameServer().readServerProperties("level-name");
+            levelname = GameServer.readServerProperties("level-name");
             getLogger().info("Found lobby name (level-name in server.properties): " + levelname);
         } catch (IOException e) {
             getLogger().severe("Something happened while reading level-name in server.property! Error logs are below, defaulting to 'world'");
@@ -62,26 +58,26 @@ public final class DeathSwap extends JavaPlugin {
 
         getLogger().info("Deleting deathswap worlds...");
         getLogger().info("Deleting overworld...");
-        gm.GameWorld.deleteWorld("deathswap-1");
-        gm.GameWorld.deleteWorld("deathswap-2");
+        GameWorld.deleteWorld("deathswap-1");
+        GameWorld.deleteWorld("deathswap-2");
         if (!config.getBoolean("game.world.nether")) {
             getLogger().info("Deleting nether...");
-            gm.GameWorld.deleteWorld("deathswap-1-nether");
-            gm.GameWorld.deleteWorld("deathswap-2-nether");
+            GameWorld.deleteWorld("deathswap-1-nether");
+            GameWorld.deleteWorld("deathswap-2-nether");
         }
         if (!config.getBoolean("game.world.end")) {
             getLogger().info("Deleting end...");
-            gm.GameWorld.deleteWorld("deathswap-1-end");
-            gm.GameWorld.deleteWorld("deathswap-2-end");
+            GameWorld.deleteWorld("deathswap-1-end");
+            GameWorld.deleteWorld("deathswap-2-end");
         }
         getLogger().info("Deleting lobby world...");
-        gm.GameWorld.deleteWorld(levelname);
-        gm.GameWorld.deleteWorld(levelname + "_nether");
-        gm.GameWorld.deleteWorld(levelname + "_the_end");
+        GameWorld.deleteWorld(levelname);
+        GameWorld.deleteWorld(levelname + "_nether");
+        GameWorld.deleteWorld(levelname + "_the_end");
 
         if (config.getBoolean("server.setuprestart.enable")) {
             try {
-                if (!gm.GameServer.restartSetup()) {
+                if (!GameServer.restartSetup()) {
                     getLogger().info("Detected that auto setup restart was enabled! Getting operating system.");
 
                     GameServer.OSTypes os;
@@ -92,12 +88,12 @@ public final class DeathSwap extends JavaPlugin {
                             os = GameServer.OSTypes.valueOf(configOS);
                         } else {
                             getLogger().info("Unknown OS specified in config.yml! Resorting to automatic detection.");
-                            os = gm.GameServer.getOS();
+                            os = GameServer.getOS();
                         }
 
                     } else {
                         getLogger().info("No OS specified in config. Attempting automatic detection.");
-                        os = gm.GameServer.getOS();
+                        os = GameServer.getOS();
                     }
 
                     getLogger().info("Detected operating system: " + os.toString());
@@ -114,7 +110,7 @@ public final class DeathSwap extends JavaPlugin {
                         } else {
                             getLogger().info("No server jar specified in config. Attempting automatic detection.");
                             try {
-                                serverJar = gm.GameServer.getServerJar().getName();
+                                serverJar = GameServer.getServerJar().getName();
                                 proceed = true;
                             } catch (NoClassDefFoundError e) {
                                 getLogger().severe("The server jar could not be detected!");
@@ -128,7 +124,7 @@ public final class DeathSwap extends JavaPlugin {
                             getLogger().info("Server jar name: " + serverJar);
 
                             getLogger().info("Setting up restart...");
-                            if (gm.GameServer.setupRestart(os, serverJar)) {
+                            if (GameServer.setupRestart(os, serverJar)) {
                                 getLogger().info("This plugin has created a file called restart.bat/restart.sh, please do not delete it!");
                                 getLogger().info("The restart will take effect on next server boot.");
                             }
@@ -145,13 +141,13 @@ public final class DeathSwap extends JavaPlugin {
         }
 
         try {
-            if (gm.GameServer.checkForServerProperties(config.getBoolean("server.changeproperties.protection"),
+            if (GameServer.checkForServerProperties(config.getBoolean("server.changeproperties.protection"),
                     !config.getBoolean("game.world.nether"),
                     !config.getBoolean("game.world.end"),
                     config.getBoolean("server.changeproperties.anticheat"))) {
                 getLogger().info("Detected that at least one of the following: Nether, end, spawn protection and minecraft's anticheat wasn't disabled!");
                 getLogger().info("The appropriate files has been edited. Restarting server for changes to take effect.");
-                gm.GameServer.restart();
+                GameServer.restart();
             }
         } catch (IOException | InvalidConfigurationException e) {
             throw new RuntimeException(e);
@@ -198,22 +194,22 @@ public final class DeathSwap extends JavaPlugin {
                 getLogger().info("World type: FLAT");
                 break;
         }
-        ds1 = gm.GameWorld.createWorld("deathswap-1", seed, World.Environment.NORMAL, type);
-        ds2 = gm.GameWorld.createWorld("deathswap-2", seed, World.Environment.NORMAL, type);
+        ds1 = GameWorld.createWorld("deathswap-1", seed, World.Environment.NORMAL, type);
+        ds2 = GameWorld.createWorld("deathswap-2", seed, World.Environment.NORMAL, type);
 
         if (config.getBoolean("game.world.nether")) {
             getLogger().info("Creating nether worlds...");
-            gm.GameWorld.createWorld("deathswap-1-nether", seed, World.Environment.NETHER, WorldType.NORMAL);
-            gm.GameWorld.createWorld("deathswap-2-nether", seed, World.Environment.NETHER, WorldType.NORMAL);
+            GameWorld.createWorld("deathswap-1-nether", seed, World.Environment.NETHER, WorldType.NORMAL);
+            GameWorld.createWorld("deathswap-2-nether", seed, World.Environment.NETHER, WorldType.NORMAL);
         }
 
         if (config.getBoolean("game.world.end")) {
             getLogger().info("Creating end worlds...");
-            gm.GameWorld.createWorld("deathswap-1-end", seed, World.Environment.THE_END, WorldType.NORMAL);
-            gm.GameWorld.createWorld("deathswap-2-end", seed, World.Environment.THE_END, WorldType.NORMAL);
+            GameWorld.createWorld("deathswap-1-end", seed, World.Environment.THE_END, WorldType.NORMAL);
+            GameWorld.createWorld("deathswap-2-end", seed, World.Environment.THE_END, WorldType.NORMAL);
         }
-        World lobby = gm.GameWorld.createWorld(levelname);
-        gm.GameWorld.setupWorld(lobby, true, 10.0, 0, 0, 0);
+        World lobby = GameWorld.createWorld(levelname);
+        GameWorld.setupWorld(lobby, true, 10.0, 0, 0, 0);
 
         getLogger().info("Finished setup! Have fun!");
     }

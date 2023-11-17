@@ -1,15 +1,15 @@
-package tk.diffusehyperion.deathswap.Commands;
+package me.diffusehyperion.deathswap.Commands;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import tk.diffusehyperion.deathswap.DeathSwap;
-import tk.diffusehyperion.deathswap.States.Main;
+import me.diffusehyperion.deathswap.DeathSwap;
+import me.diffusehyperion.deathswap.States.Main;
 
-import static tk.diffusehyperion.deathswap.DeathSwap.config;
-import static tk.diffusehyperion.deathswap.DeathSwap.state;
+import static me.diffusehyperion.deathswap.DeathSwap.config;
+import static me.diffusehyperion.deathswap.DeathSwap.state;
 
 public class swap implements CommandExecutor {
     @Override
